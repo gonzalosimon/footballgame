@@ -2,21 +2,33 @@
 <html>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <link rel="stylesheet" href="style.css">
     <title>Football Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
     </head>
 
     <body>
         <h1>Football Game</h1>
+        <p id="blueteam_score">
+        <p id="redteam_score"></p></p>
         <canvas id="canvas" width="1200" height="600"></canvas>
-        <div id="out"></div>
-        <script src="script.js"></script>
-        <p>Make sure this window has focus, then use the arrow keys on you keyboard to move the red square.</p>
-        <p>When pressing both the left and the down arrow, the red square will move both down and to the left.</p>
+        <script src="script.js" ></script>
+        <script src="functions.js" ></script> 
+        <p>Make sure this window has focus, then use the arrow keys on you keyboard to move the player blue.</p>
+
     </body>
 
     
-    <footer>Made by Gonzalo</footer>
+    <footer class="site-footer">
+      <p style="float:left; padding-left: 12%; padding-right: 50%;"> Made by <a href="https://gbsimon.netlify.app/">Gonzalo Simon</a></p>          <ul class="social-icons"><strong>My social media</strong> 
+        <li><a class="twitter" href="https://twitter.com/_gonzalosimon"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="linkedin" href="https://www.linkedin.com/in/gonzalo-simon-aguilar/"><i class="fa fa-linkedin"></i></a></li>
+        
+    </ul>
+        </footer>
 </html>
 
 
