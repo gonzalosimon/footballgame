@@ -33,12 +33,13 @@ var upDown = false;
 var downDown = false;
 var leftDown = false;
 var rightDown = false;
+var shoot = false;
+var pass = false;
 
 function start() {
   clear();
   renderBackground();
   checkPlayers_PLayersCollision();
-  renderGates();
   checkKeyboardStatus();
   checkPlayersBounds();
   checkBallBounds();
@@ -58,19 +59,19 @@ function Ball(x, y) {
   this.y = y;
   this.xVel = 0;
   this.yVel = 0;
-  this.decel = 0.03;
-  this.size = 8;
+  this.decel = 0.02;
+  this.size = 7;
 }
 
 function Player(x, y) {
   this.x = x;
   this.y = y;
-  this.size = 18;
+  this.size = 16;
   this.xVel = 0;
   this.yVel = 0;
-  this.accel = 0.55;
-  this.decel = 0.55;
-  this.maxSpeed = 3;
+  this.accel = 0.25;
+  this.decel = 0.25;
+  this.maxSpeed = 3.5 ;
 }
 
 function reset() {
@@ -253,7 +254,13 @@ function checkPlayersBounds() {
 }
 
 function checkKeyboardStatus() {
-  if (upDown) {
+  if(shoot) {
+    console.log("WorkingShoot")
+  }
+  if(pass) {
+    console.log("WorkingpPass")
+  }
+    if (upDown) {
     if (players[0].yVel > -players[0].maxSpeed) {
       players[0].yVel -= players[0].accel;
     } else {
@@ -317,6 +324,12 @@ document.onkeyup = function (e) {
   if (e.keyCode === 39) {
     rightDown = false;
   }
+  if (e.keyCode === 88) {
+    shoot = false;
+  }
+  if (e.keyCode === 90) {
+    pass = false;
+  }
 };
 
 document.onkeydown = function (e) {
@@ -331,6 +344,12 @@ document.onkeydown = function (e) {
   }
   if (e.keyCode === 39) {
     rightDown = true;
+  }
+  if (e.keyCode === 88) {
+    shoot = true;
+  }
+  if (e.keyCode === 90) {
+    pass = true;
   }
 };
 
@@ -363,37 +382,119 @@ function renderPlayers() {
   c.restore();
 }
 
-function renderGates() {
-  // left gate
-  c.save();
-  c.beginPath();
-  c.moveTo(0, 200);
-  c.lineTo(0, 400);
-  c.strokeStyle = "white";
-  c.lineWidth = 30;
-  c.stroke();
-  c.closePath();
-  // right gate
-  c.beginPath();
-  c.moveTo(canvas.width, 200);
-  c.lineTo(canvas.width, 400);
-  c.strokeStyle = "white";
-  c.lineWidth = 30;
-  c.stroke();
-  c.closePath();
-  c.restore();
-}
-
 function renderBackground() {
   c.save();
-  c.fillStyle = "#a1c400";
-  c.fillRect(0, 0, canvas.width, canvas.height);
-  c.strokeStyle = "rgba(255,255,255,0.6)";
+  
+  // Outer lines
   c.beginPath();
-  c.arc(canvas.width / 2, canvas.height / 2, 75, 0, Math.PI * 2);
-  c.closePath();
-  c.lineWidth = 5;
+  c.rect(0,0, canvas.width, canvas.height);
+  c.fillStyle = "#a2ba36";
+  c.fill();
+  c.lineWidth = 1;
+  c.strokeStyle = "#FFF";
   c.stroke();
+  c.closePath();
+  
+  c.fillStyle = "#FFF";
+  
+  // Mid line
+  c.beginPath();
+  c.moveTo(canvas.width / 2, 0);
+  c.lineTo(canvas.width / 2, canvas.height);
+  c.stroke();
+  c.closePath();
+  
+  //Mid circle
+  c.beginPath()
+  c.arc(canvas.width / 2, canvas.height / 2, 73, 0, 2*Math.PI, false);
+  c.stroke();
+  c.closePath();
+  //Mid point
+  c.beginPath()
+  c.arc(canvas.width / 2, canvas.height / 2, 2, 0, 2*Math.PI, false);
+  c.fill();
+  c.closePath();
+  
+  //Home penalty box
+  c.beginPath();
+  c.rect(0, (canvas.height - 322) / 2, 132, 322);
+  c.stroke();
+  c.closePath();
+  //Home goal box
+  c.beginPath();
+  c.rect(0, (canvas.height - 146) / 2, 44, 146);
+  c.stroke();
+  c.closePath();
+  //Home goal 
+  c.beginPath();
+  c.moveTo(1, (canvas.height / 2) - 22);
+  c.lineTo(1, (canvas.height / 2) + 22);
+  c.lineWidth = 2;
+  c.stroke();
+  c.closePath();
+  c.lineWidth = 1;
+
+  //Home penalty point
+  c.beginPath()
+  c.arc(88, canvas.height / 2, 1, 0, 2*Math.PI, true);
+  c.fill();
+  c.closePath();
+  //Home half circle
+  c.beginPath()
+  c.arc(88, canvas.height / 2, 73, 0.29*Math.PI, 1.71*Math.PI, true);
+  c.stroke();
+  c.closePath();
+  
+  //Away penalty box
+  c.beginPath();
+  c.rect(canvas.width-132, (canvas.height - 322) / 2, 132, 322);
+  c.stroke();
+  c.closePath();
+  //Away goal box
+  c.beginPath();
+  c.rect(canvas.width-44, (canvas.height - 146) / 2, 44, 146);
+  c.stroke();
+  c.closePath();      
+  //Away goal 
+  c.beginPath();
+  c.moveTo(canvas.width-1, (canvas.height / 2) - 22);
+  c.lineTo(canvas.width-1, (canvas.height / 2) + 22);
+  c.lineWidth = 2;
+  c.stroke();
+  c.closePath();
+  c.lineWidth = 1;
+  //Away penalty point
+  c.beginPath()
+  c.arc(canvas.width-88, canvas.height / 2, 1, 0, 2*Math.PI, true);
+  c.fill();
+  c.closePath();
+  //Away half circle
+  c.beginPath()
+  c.arc(canvas.width-88, canvas.height / 2, 73, 0.71*Math.PI, 1.29*Math.PI, false);
+  c.stroke();
+  c.closePath();
+        
+  //Home L corner
+  c.beginPath()
+  c.arc(0, 0, 8, 0, 0.5*Math.PI, false);
+  c.stroke();
+  c.closePath();
+  //Home R corner
+  c.beginPath()
+  c.arc(0, canvas.height, 8, 0, 2*Math.PI, true);
+  c.stroke();
+  c.closePath();
+  //Away R corner
+  c.beginPath()
+  c.arc(canvas.width, 0, 8, 0.5*Math.PI, 1*Math.PI, false);
+  c.stroke();
+  c.closePath();
+  //Away L corner
+  c.beginPath()
+  c.arc(canvas.width, canvas.height, 8, 1*Math.PI, 1.5*Math.PI, false);
+  c.stroke();
+  c.closePath();
+
   c.restore();
 }
 
