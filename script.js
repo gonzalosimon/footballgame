@@ -2,23 +2,31 @@ var canvas = document.getElementById("canvas");
 var c = canvas.getContext("2d");
 var redteam_score = document.getElementById("redteam_score");
 var blueteam_score = document.getElementById("blueteam_score");
-window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+window.requestAnimationFrame =
+  window.requestAnimationFrame ||
+  window.mozRequestAnimationFrame ||
+  window.webkitRequestAnimationFrame ||
+  window.msRequestAnimationFrame;
 var init = requestAnimationFrame(start);
 
 let blueteam = 0;
 let redteam = 0;
 
-let players=[ 
+let players = [
   //blue
-  new Player(435, 300), new Player(300, 150), new Player(300, 450), 
-  new Player(180, 285), new Player(30, 290), 
-  
+  new Player(435, 300),
+  new Player(300, 150),
+  new Player(300, 450),
+  new Player(180, 285),
+  new Player(30, 290),
+
   //red
-  new Player(770, 300), new Player(800, 475), 
-  new Player(800, 150), new Player(1170, 300), new Player(1000, 305), 
-
-];	
-
+  new Player(770, 300),
+  new Player(800, 475),
+  new Player(800, 150),
+  new Player(1170, 300),
+  new Player(1000, 305),
+];
 
 ball = new Ball(600, 300);
 var upDown = false;
@@ -26,15 +34,24 @@ var downDown = false;
 var leftDown = false;
 var rightDown = false;
 
-function start(){
-  clear(); renderBackground(); checkPlayers_PLayersCollision(); renderGates(); checkKeyboardStatus(); checkPlayersBounds(); checkBallBounds(); checkPlayers_BallCollision();
-  movePlayers(); moveBall(); renderPlayers(); renderBall();
+function start() {
+  clear();
+  renderBackground();
+  checkPlayers_PLayersCollision();
+  renderGates();
+  checkKeyboardStatus();
+  checkPlayersBounds();
+  checkBallBounds();
+  checkPlayers_BallCollision();
+  movePlayers();
+  moveBall();
+  renderPlayers();
+  renderBall();
 
-  blueteam_score.innerHTML = "Blue Team Score: " + blueteam; 
-  redteam_score.innerHTML = "Red Team Score: " + redteam; 
+  blueteam_score.innerHTML = "Blue Team Score: " + blueteam;
+  redteam_score.innerHTML = "Red Team Score: " + redteam;
   requestAnimationFrame(start);
 }
-
 
 function Ball(x, y) {
   this.x = x;
@@ -57,50 +74,21 @@ function Player(x, y) {
 }
 
 function reset() {
-  
-  // //blue team restore players positions
-  // players[0].x = 435;
-  // players[0].y = 300;
-
-  // players[1].x = 300;
-  // players[1].y = 150 
-  
-  // players[2].x = 300
-  // players[2].y = 450
-  
-  // players[3].x = 180
-  // players[3].y = 285
-  
-  // players[4].x = 30
-  // players[4].y = 290
-
-  // //red team restore players positions
-  // players[5].x = 770;
-  // players[5].y = 300;
-  
-  // players[6].x = 800;
-  // players[6].y = 475 
-  
-  // players[7].x = 800
-  // players[7].y = 150
-  
-  // players[8].x = 1170
-  // players[8].y = 300
-  
-  // players[9].x = 1000
-  // players[9].y = 305
-
-  players=[ 
+  players = [
     //blue
-    new Player(435, 300), new Player(300, 150), new Player(300, 450), 
-    new Player(180, 285), new Player(30, 290), 
-    
-    //red
-    new Player(770, 300), new Player(800, 475), 
-    new Player(800, 150), new Player(1170, 300), new Player(1000, 305), 
-  
-  ];	
+    new Player(435, 300),
+    new Player(300, 150),
+    new Player(300, 450),
+    new Player(180, 285),
+    new Player(30, 290),
 
+    //red
+    new Player(770, 300),
+    new Player(800, 475),
+    new Player(800, 150),
+    new Player(1170, 300),
+    new Player(1000, 305),
+  ];
   ball = new Ball(600, 300);
   upDown = false;
   downDown = false;
@@ -117,7 +105,10 @@ function movePlayers() {
 
 function checkPlayers_BallCollision() {
   for (let i = 0; i < 10; i++) {
-    var ball_distance = getDistance(players[i].x, players[i].y, ball.x, ball.y) - players[i].size - ball.size;
+    var ball_distance =
+      getDistance(players[i].x, players[i].y, ball.x, ball.y) -
+      players[i].size -
+      ball.size;
     if (ball_distance < 0) {
       collide(ball, players[i]);
     }
@@ -127,31 +118,44 @@ function checkPlayers_BallCollision() {
 function checkPlayers_PLayersCollision() {
   //Collision blue player with another blue player
   for (let k = 0; k < 5; k++) {
-  for (let i = 1; i < 5; i++) {
-  var player_distance = getDistance(players[k].x, players[k].y, players[i].x, players[i].y) - players[k].size - players[i].size;
-  if(i===k) {i++}
-  else if (player_distance < 0) {
-    collide(players[k], players[i]);
+    for (let i = 1; i < 5; i++) {
+      var player_distance =
+        getDistance(players[k].x, players[k].y, players[i].x, players[i].y) -
+        players[k].size -
+        players[i].size;
+      if (i === k) {
+        i++;
+      } else if (player_distance < 0) {
+        collide(players[k], players[i]);
+      }
+    }
   }
- }
-}
-// Collision red player with another red player
-for (let k = 5; k < 10; k++) {
-for (let i = 6; i < 10; i++) {
-  var player_distance = getDistance(players[k].x, players[k].y, players[i].x, players[i].y) - players[k].size - players[i].size;
-  if(i===k) {i++}
-  else if (player_distance < 0) {
-    collide(players[k], players[i]);
+  // Collision red player with another red player
+  for (let k = 5; k < 10; k++) {
+    for (let i = 6; i < 10; i++) {
+      var player_distance =
+        getDistance(players[k].x, players[k].y, players[i].x, players[i].y) -
+        players[k].size -
+        players[i].size;
+      if (i === k) {
+        i++;
+      } else if (player_distance < 0) {
+        collide(players[k], players[i]);
+      }
+    }
   }
-} }
-// Collision blue player with a red player
+  // Collision blue player with a red player
   for (let i = 0; i < 5; i++) {
     for (let j = 5; j < 10; j++) {
-    var player_distance = getDistance(players[i].x, players[i].y, players[j].x, players[j].y) - players[i].size - players[j].size;
-    if(i===j) {i++}
-    else if (player_distance < 0) {
-      collide(players[i], players[j]);
-     }
+      var player_distance =
+        getDistance(players[i].x, players[i].y, players[j].x, players[j].y) -
+        players[i].size -
+        players[j].size;
+      if (i === j) {
+        i++;
+      } else if (player_distance < 0) {
+        collide(players[i], players[j]);
+      }
     }
   }
 }
@@ -195,8 +199,7 @@ function moveBall() {
 }
 
 function checkBallBounds() {
-
-  // this means a point for the blue team 
+  // this means a point for the blue team
   if (ball.x + ball.size > canvas.width) {
     if (ball.y > 200 && ball.y < 400) {
       blueteam++;
@@ -333,11 +336,11 @@ document.onkeydown = function (e) {
 
 function renderBall() {
   c.save();
-	c.beginPath();
-	c.fillStyle = "brown";
-	c.arc(ball.x,ball.y,ball.size,0,Math.PI*2);
-	c.fill();
-	c.closePath();
+  c.beginPath();
+  c.fillStyle = "brown";
+  c.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
+  c.fill();
+  c.closePath();
   c.restore();
 }
 
@@ -350,7 +353,7 @@ function renderPlayers() {
     c.fill();
     c.closePath();
   }
-  for (let i = 5; i < 10 ; i++) {
+  for (let i = 5; i < 10; i++) {
     c.beginPath();
     c.fillStyle = "red";
     c.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
@@ -383,7 +386,7 @@ function renderGates() {
 
 function renderBackground() {
   c.save();
-  c.fillStyle = "rgb(112, 197, 73)";
+  c.fillStyle = "#a1c400";
   c.fillRect(0, 0, canvas.width, canvas.height);
   c.strokeStyle = "rgba(255,255,255,0.6)";
   c.beginPath();
@@ -397,5 +400,3 @@ function renderBackground() {
 function clear() {
   c.clearRect(0, 0, canvas.width, canvas.height);
 }
-
-
