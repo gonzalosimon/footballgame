@@ -7,7 +7,6 @@ window.requestAnimationFrame =
   window.mozRequestAnimationFrame ||
   window.webkitRequestAnimationFrame ||
   window.msRequestAnimationFrame;
-var init = requestAnimationFrame(start);
 
 let blueteam = 0;
 let redteam = 0;
@@ -35,12 +34,24 @@ var leftDown = false;
 var rightDown = false;
 var shoot = false;
 var pass = false;
+var clicked = false;
 
 function start() {
+  var team;
+  var userChoice = document.getElementById("input_id").value;
+  //  document.getElementById('alert').innerHTML = 'You must select a player!';
+  if (userChoice > 4) {
+    team = "Red team";
+  } else {
+    team = "Blue team";
+  }
+
+  document.getElementById("info").innerHTML =
+    "You are the player number " + userChoice + " of the " + team;
+  console.log(userChoice);
   clear();
   renderBackground();
   checkPlayers_PLayersCollision();
-  checkKeyboardStatus();
   checkPlayersBounds();
   checkBallBounds();
   checkPlayers_BallCollision();
@@ -48,30 +59,60 @@ function start() {
   moveBall();
   renderPlayers();
   renderBall();
-
+  checkKeyboardStatus(userChoice);
   blueteam_score.innerHTML = "Blue Team Score: " + blueteam;
   redteam_score.innerHTML = "Red Team Score: " + redteam;
   requestAnimationFrame(start);
 }
+
+// if (true){
+// cover the screen of a color
+
+// c.beginPath();
+// c.rect(0,0, canvas.width, canvas.height);
+// c.fillStyle = "red";
+// c.fill();
+// c.lineWidth = 1;
+// c.strokeStyle = "#FFF";
+// c.stroke();
+// c.closePath();
+
+// we select a team
+// we select a player
+
+// var userChoice = window.prompt("Select a player (a number from 1 to 10)");
+
+// if(userChoice < 0 || userChoice > 9) {
+//   alert("You must select a player between 1 and 9")
+//   window.location.reload(false);
+// } else {
+//   alert("Your player is the number " + userChoice);
+// }
+
+// we make a start button with element by ID
+// if there's no player selected we can't start. (maybe I should add a pretdeterminate player for when there's no player)
+
+// }
+// With this the user is able to select any player of the field"
 
 function Ball(x, y) {
   this.x = x;
   this.y = y;
   this.xVel = 0;
   this.yVel = 0;
-  this.decel = 0.02;
-  this.size = 7;
+  this.decel = 0.038;
+  this.size = 6;
 }
 
 function Player(x, y) {
   this.x = x;
   this.y = y;
-  this.size = 16;
+  this.size = 10;
   this.xVel = 0;
   this.yVel = 0;
   this.accel = 0.25;
-  this.decel = 0.25;
-  this.maxSpeed = 3.5 ;
+  this.decel = 0.55;
+  this.maxSpeed = 3.5;
 }
 
 function reset() {
@@ -253,60 +294,61 @@ function checkPlayersBounds() {
   }
 }
 
-function checkKeyboardStatus() {
-  if(shoot) {
-    console.log("WorkingShoot")
+function checkKeyboardStatus(userChoice) {
+  if (shoot) {
+    console.log("WorkingShoot");
   }
-  if(pass) {
-    console.log("WorkingpPass")
+  if (pass) {
+    console.log("WorkingPass");
   }
-    if (upDown) {
-    if (players[0].yVel > -players[0].maxSpeed) {
-      players[0].yVel -= players[0].accel;
+
+  if (upDown) {
+    if (players[userChoice].yVel > -players[userChoice].maxSpeed) {
+      players[userChoice].yVel -= players[userChoice].accel;
     } else {
-      players[0].yVel = -players[0].maxSpeed;
+      players[userChoice].yVel = -players[userChoice].maxSpeed;
     }
   } else {
-    if (players[0].yVel < 0) {
-      players[0].yVel += players[0].decel;
-      if (players[0].yVel > 0) players[0].yVel = 0;
+    if (players[userChoice].yVel < 0) {
+      players[userChoice].yVel += players[userChoice].decel;
+      if (players[userChoice].yVel > userChoice) players[userChoice].yVel = 0;
     }
   }
 
   if (downDown) {
-    if (players[0].yVel < players[0].maxSpeed) {
-      players[0].yVel += players[0].accel;
+    if (players[userChoice].yVel < players[userChoice].maxSpeed) {
+      players[userChoice].yVel += players[userChoice].accel;
     } else {
-      players[0].yVel = players[0].maxSpeed;
+      players[userChoice].yVel = players[userChoice].maxSpeed;
     }
   } else {
-    if (players[0].yVel > 0) {
-      players[0].yVel -= players[0].decel;
-      if (players[0].yVel < 0) players[0].yVel = 0;
+    if (players[userChoice].yVel > 0) {
+      players[userChoice].yVel -= players[userChoice].decel;
+      if (players[userChoice].yVel < 0) players[userChoice].yVel = 0;
     }
   }
   if (leftDown) {
-    if (players[0].xVel > -players[0].maxSpeed) {
-      players[0].xVel -= players[0].accel;
+    if (players[userChoice].xVel > -players[userChoice].maxSpeed) {
+      players[userChoice].xVel -= players[userChoice].accel;
     } else {
-      players[0].xVel = -players[0].maxSpeed;
+      players[userChoice].xVel = -players[userChoice].maxSpeed;
     }
   } else {
-    if (players[0].xVel < 0) {
-      players[0].xVel += players[0].decel;
-      if (players[0].xVel > 0) players[0].xVel = 0;
+    if (players[userChoice].xVel < 0) {
+      players[userChoice].xVel += players[userChoice].decel;
+      if (players[userChoice].xVel > 0) players[userChoice].xVel = 0;
     }
   }
   if (rightDown) {
-    if (players[0].xVel < players[0].maxSpeed) {
-      players[0].xVel += players[0].accel;
+    if (players[userChoice].xVel < players[userChoice].maxSpeed) {
+      players[userChoice].xVel += players[userChoice].accel;
     } else {
-      players[0].xVel = players[0].maxSpeed;
+      players[userChoice].xVel = players[userChoice].maxSpeed;
     }
   } else {
-    if (players[0].xVel > 0) {
-      players[0].xVel -= players[0].decel;
-      if (players[0].xVel < 0) players[0].xVel = 0;
+    if (players[userChoice].xVel > 0) {
+      players[userChoice].xVel -= players[userChoice].decel;
+      if (players[userChoice].xVel < 0) players[userChoice].xVel = 0;
     }
   }
 }
@@ -384,37 +426,37 @@ function renderPlayers() {
 
 function renderBackground() {
   c.save();
-  
+
   // Outer lines
   c.beginPath();
-  c.rect(0,0, canvas.width, canvas.height);
+  c.rect(0, 0, canvas.width, canvas.height);
   c.fillStyle = "#a2ba36";
   c.fill();
   c.lineWidth = 1;
   c.strokeStyle = "#FFF";
   c.stroke();
   c.closePath();
-  
+
   c.fillStyle = "#FFF";
-  
+
   // Mid line
   c.beginPath();
   c.moveTo(canvas.width / 2, 0);
   c.lineTo(canvas.width / 2, canvas.height);
   c.stroke();
   c.closePath();
-  
+
   //Mid circle
-  c.beginPath()
-  c.arc(canvas.width / 2, canvas.height / 2, 73, 0, 2*Math.PI, false);
+  c.beginPath();
+  c.arc(canvas.width / 2, canvas.height / 2, 73, 0, 2 * Math.PI, false);
   c.stroke();
   c.closePath();
   //Mid point
-  c.beginPath()
-  c.arc(canvas.width / 2, canvas.height / 2, 2, 0, 2*Math.PI, false);
+  c.beginPath();
+  c.arc(canvas.width / 2, canvas.height / 2, 2, 0, 2 * Math.PI, false);
   c.fill();
   c.closePath();
-  
+
   //Home penalty box
   c.beginPath();
   c.rect(0, (canvas.height - 322) / 2, 132, 322);
@@ -425,73 +467,80 @@ function renderBackground() {
   c.rect(0, (canvas.height - 146) / 2, 44, 146);
   c.stroke();
   c.closePath();
-  //Home goal 
+  //Home goal
   c.beginPath();
-  c.moveTo(1, (canvas.height / 2) - 22);
-  c.lineTo(1, (canvas.height / 2) + 22);
+  c.moveTo(1, canvas.height / 2 - 22);
+  c.lineTo(1, canvas.height / 2 + 22);
   c.lineWidth = 2;
   c.stroke();
   c.closePath();
   c.lineWidth = 1;
 
   //Home penalty point
-  c.beginPath()
-  c.arc(88, canvas.height / 2, 1, 0, 2*Math.PI, true);
+  c.beginPath();
+  c.arc(88, canvas.height / 2, 1, 0, 2 * Math.PI, true);
   c.fill();
   c.closePath();
   //Home half circle
-  c.beginPath()
-  c.arc(88, canvas.height / 2, 73, 0.29*Math.PI, 1.71*Math.PI, true);
+  c.beginPath();
+  c.arc(88, canvas.height / 2, 73, 0.29 * Math.PI, 1.71 * Math.PI, true);
   c.stroke();
   c.closePath();
-  
+
   //Away penalty box
   c.beginPath();
-  c.rect(canvas.width-132, (canvas.height - 322) / 2, 132, 322);
+  c.rect(canvas.width - 132, (canvas.height - 322) / 2, 132, 322);
   c.stroke();
   c.closePath();
   //Away goal box
   c.beginPath();
-  c.rect(canvas.width-44, (canvas.height - 146) / 2, 44, 146);
+  c.rect(canvas.width - 44, (canvas.height - 146) / 2, 44, 146);
   c.stroke();
-  c.closePath();      
-  //Away goal 
+  c.closePath();
+  //Away goal
   c.beginPath();
-  c.moveTo(canvas.width-1, (canvas.height / 2) - 22);
-  c.lineTo(canvas.width-1, (canvas.height / 2) + 22);
+  c.moveTo(canvas.width - 1, canvas.height / 2 - 22);
+  c.lineTo(canvas.width - 1, canvas.height / 2 + 22);
   c.lineWidth = 2;
   c.stroke();
   c.closePath();
   c.lineWidth = 1;
   //Away penalty point
-  c.beginPath()
-  c.arc(canvas.width-88, canvas.height / 2, 1, 0, 2*Math.PI, true);
+  c.beginPath();
+  c.arc(canvas.width - 88, canvas.height / 2, 1, 0, 2 * Math.PI, true);
   c.fill();
   c.closePath();
   //Away half circle
-  c.beginPath()
-  c.arc(canvas.width-88, canvas.height / 2, 73, 0.71*Math.PI, 1.29*Math.PI, false);
+  c.beginPath();
+  c.arc(
+    canvas.width - 88,
+    canvas.height / 2,
+    73,
+    0.71 * Math.PI,
+    1.29 * Math.PI,
+    false
+  );
   c.stroke();
   c.closePath();
-        
+
   //Home L corner
-  c.beginPath()
-  c.arc(0, 0, 8, 0, 0.5*Math.PI, false);
+  c.beginPath();
+  c.arc(0, 0, 8, 0, 0.5 * Math.PI, false);
   c.stroke();
   c.closePath();
   //Home R corner
-  c.beginPath()
-  c.arc(0, canvas.height, 8, 0, 2*Math.PI, true);
+  c.beginPath();
+  c.arc(0, canvas.height, 8, 0, 2 * Math.PI, true);
   c.stroke();
   c.closePath();
   //Away R corner
-  c.beginPath()
-  c.arc(canvas.width, 0, 8, 0.5*Math.PI, 1*Math.PI, false);
+  c.beginPath();
+  c.arc(canvas.width, 0, 8, 0.5 * Math.PI, 1 * Math.PI, false);
   c.stroke();
   c.closePath();
   //Away L corner
-  c.beginPath()
-  c.arc(canvas.width, canvas.height, 8, 1*Math.PI, 1.5*Math.PI, false);
+  c.beginPath();
+  c.arc(canvas.width, canvas.height, 8, 1 * Math.PI, 1.5 * Math.PI, false);
   c.stroke();
   c.closePath();
 

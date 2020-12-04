@@ -1,59 +1,116 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" href="style.css" />
     <title>Football Game</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
 
-    </head>
+  <body>
+    <h1>Football Game</h1>
 
-    <body>
-        <h1>Football Game</h1>
-        <p style="float: left;   padding-left: 20%;"><strong> Made by Gonzalo Simon.<a style="text-decoration: none;" href="https://gbsimon.netlify.app"> Check my website</a></strong></p>
-        <p class="score" id="blueteam_score">
-          <p class="score" id="redteam_score"></p>
-        </p>
-        <canvas id="canvas" width="1200" height="600"></canvas>
-        <script src="script.js" ></script>
-    </body>
+    <p style="float: left; padding-left: 20%">
+      <strong>
+        Made by Gonzalo Simon.<a
+          style="text-decoration: none"
+          href="https://gbsimon.netlify.app"
+        >
+          Check my website</a
+        ></strong
+      >
+    </p>
+    <p class="score" id="blueteam_score"></p>
+    <p class="score" id="redteam_score"></p>
+    <canvas id="canvas" width="1200" height="600"></canvas>
+    <script src="script.js"></script>
+    <form class="select">
+      <div onclick="style.display = 'none'">
+        <!-- <p>Select a team</p> -->
 
-    <footer>
-        <div class="footer">
-           <div class="footer-statement">
-               Contact
-             </div>
-    
-           <div class="social-links">
-             <div class="social">
-               <a href="https://www.linkedin.com/in/gonzalo-simon-aguilar/?locale=en_US/" target="_blank" rel="noopener noreferrer">
-                 <img class="linkedin" src='./images/linkedin-logo.png' alt="Linkedin Logo"/>
-               </a>
-             </div>
-             <div class="social">
-               <a href="https://www.github.com/gb-simon/" target="_blank" rel="noopener noreferrer">
-                 <img class="github" src='./images/github-logo.png' alt="GitHub Logo"/>
-               </a>
-             </div>
-             <div class="social">
-               <a class="twitter" href="https://twitter.com/_gonzalosimon"><i class="fa fa-twitter"></i>
-               </a>
-             </div>
-             <div class="social-last">
-               <a href="mailto:aguilarsimon01@gmail.com" target="_blank" rel="noopener noreferrer">
-                 <img class="email" src='./images/email-logo.png' alt="Email Logo"/>
-               </a>
-             </div>
-           </div>
-         </div>
-           </footer>
+        <p>Select a player of the Blue Team</p>
+        <input type="reset" onclick="id='input_id'" value="0" />
+        <input type="reset" onclick="id='input_id'" value="1" />
+        <input type="reset" onclick="id='input_id'" value="2" />
+        <input type="reset" onclick="id='input_id'" value="3" />
+        <input type="reset" onclick="id='input_id'" value="4" />
+        <p>Or</p>
+        <p>Select a player of the Red Team</p>
+        <input type="reset" onclick="id='input_id'" value="5" />
+        <input type="reset" onclick="id='input_id'" value="6" />
+        <input type="reset" onclick="id='input_id'" value="7" />
+        <input type="reset" onclick="id='input_id'" value="8" />
+        <input type="reset" onclick="id='input_id'" value="9" />
+      </div>
+    </form>
 
+    <div id="info"></div>
+    <div id="alert"></div>
+    <input
+      class="button"
+      type="reset"
+      value="Start Match"
+      onclick="style.display = 'none'; start();"
+    />
+  </body>
+
+  <footer>
+    <div class="footer">
+      <div class="footer-statement">Contact</div>
+
+      <div class="social-links">
+        <div class="social">
+          <a
+            href="https://www.linkedin.com/in/gonzalo-simon-aguilar/?locale=en_US/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              class="linkedin"
+              src="./images/linkedin-logo.png"
+              alt="Linkedin Logo"
+            />
+          </a>
+        </div>
+        <div class="social">
+          <a
+            href="https://www.github.com/gb-simon/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              class="github"
+              src="./images/github-logo.png"
+              alt="GitHub Logo"
+            />
+          </a>
+        </div>
+        <div class="social">
+          <a class="twitter" href="https://twitter.com/_gonzalosimon"
+            ><i class="fa fa-twitter"></i>
+          </a>
+        </div>
+        <div class="social-last">
+          <a
+            href="mailto:aguilarsimon01@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img class="email" src="./images/email-logo.png" alt="Email Logo" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </html>
-
-
-
-
-
- 

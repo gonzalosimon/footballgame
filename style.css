@@ -1,52 +1,52 @@
-@font-face {
-  font-family: 'circular-std-medium';
-  src: url('./font/CircularStd-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-}
-
 body {
-    background-color:#4f72be;
-    text-align: center;
-    color: white;
+  background-color: #4f72be;
+  text-align: center;
+  color: white;
+  font-family: Monaco, monospace;
 }
 
-#canvas {
-    border:2px solid #d3d3d3;
-    align-items: center;
+.select {
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
 }
 
-.score{
+.score {
   font-style: oblique;
   font-size: large;
   padding-right: 10%;
 }
 
 .button {
-    background-color: #008CBA;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  margin-top: 2%;
+  line-height: 60px;
+  font-weight: bold;
+  padding: 0 40px;
+  background: salmon;
+  border: none;
+  cursor: pointer;
+}
+.button:hover {
+  background: lightsalmon;
 }
 
 a {
-  color:#fff ;
+  color: #fff;
 }
 a:hover {
-  color:#1DA1F2;
+  color: #1da1f2;
 }
 
 a:link {
   text-decoration: none !important;
-  color: black !important; 
+  color: black !important;
 }
-
 
 /* Footer */
 .footer {
@@ -54,64 +54,68 @@ a:link {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  }
-  
-  .footer .footer-statement {
+}
+
+.footer .footer-statement {
   font-family: circular-std-medium, Arial, sans-serif;
   font-size: 18px;
   width: 100%;
-  margin: 15px auto 11px auto;
-  }
-  
-  .footer .social-links {
+  margin: 15px auto 10px auto;
+}
+
+.footer .social-links {
   display: flex;
   justify-content: center;
   width: 100%;
-  }
-  
-  .footer .social-links .social {
+}
+
+.footer .social-links .social {
   background-color: #000000;
   border-radius: 32px;
   width: 32px;
   height: 32px;
   margin-right: 8px;
-  }
-  
-  .footer .social-links .social-last {
+}
+
+.footer .social-links .social-last {
   background-color: #000000;
   border-radius: 32px;
   width: 32px;
   height: 32px;
   margin-right: 0px;
-  }
-  
-  .footer .social-links .social .github {
+}
+
+.footer .social-links .social .github {
   width: 19px;
   height: 12px;
   padding: 10px 6.5px 10px 6.5px;
-  }
+}
 
 .footer .social-links .social .twitter {
   width: 16px;
   height: 12px;
   padding: 8px 0px 10px 8.5px;
   display: flex;
-  }
-  
-  .footer .social-links .social .linkedin  {
+}
+
+.footer .social-links .social .linkedin {
   width: 16px;
   height: 14px;
   padding: 8px 8px 10px 8px;
-  }
-  
-  .footer .social-links .social .github {
+}
+
+.footer .social-links .social .github {
   width: 16px;
   height: 12px;
   padding: 10px 8px 10px 8px;
-  }
-  
-  .footer .social-links .social-last .email {
+}
+
+.footer .social-links .social-last .email {
   width: 16px;
   height: 12px;
   padding: 10px 8px 10px 8px;
-  }
+}
+
+.box.active {
+  color: red;
+}
