@@ -65,36 +65,6 @@ function start() {
   requestAnimationFrame(start);
 }
 
-// if (true){
-// cover the screen of a color
-
-// c.beginPath();
-// c.rect(0,0, canvas.width, canvas.height);
-// c.fillStyle = "red";
-// c.fill();
-// c.lineWidth = 1;
-// c.strokeStyle = "#FFF";
-// c.stroke();
-// c.closePath();
-
-// we select a team
-// we select a player
-
-// var userChoice = window.prompt("Select a player (a number from 1 to 10)");
-
-// if(userChoice < 0 || userChoice > 9) {
-//   alert("You must select a player between 1 and 9")
-//   window.location.reload(false);
-// } else {
-//   alert("Your player is the number " + userChoice);
-// }
-
-// we make a start button with element by ID
-// if there's no player selected we can't start. (maybe I should add a pretdeterminate player for when there's no player)
-
-// }
-// With this the user is able to select any player of the field"
-
 function Ball(x, y) {
   this.x = x;
   this.y = y;
