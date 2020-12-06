@@ -8,6 +8,8 @@ window.requestAnimationFrame =
   window.webkitRequestAnimationFrame ||
   window.msRequestAnimationFrame;
 
+
+
 let blueteam = 0;
 let redteam = 0;
 
@@ -23,11 +25,24 @@ let players = [
   new Player(770, 300),
   new Player(800, 475),
   new Player(800, 150),
-  new Player(1170, 300),
   new Player(1000, 305),
+  new Player(1170, 300),
 ];
 
 ball = new Ball(600, 300);
+var imgPath = "assets/images/ball.png";
+//The path to the image that we want to add.
+var ballReady = false;
+var ballImage = new Image();
+
+//Create a new Image object.
+ballImage.onload = function(){
+  //Draw the image onto the canvas.
+ ballReady = true;
+}
+//Set the src of this Image object.
+ballImage.src = imgPath;
+
 var upDown = false;
 var downDown = false;
 var leftDown = false;
@@ -45,6 +60,7 @@ function playSound(sound) {
     song1.pause();
   }
 }
+
 
 
 $(function () {
@@ -97,6 +113,7 @@ function start() {
 function Ball(x, y) {
   this.x = x;
   this.y = y;
+
   this.xVel = 0;
   this.yVel = 0;
   this.decel = 0.038;
@@ -127,8 +144,8 @@ function reset() {
     new Player(770, 300),
     new Player(800, 475),
     new Player(800, 150),
-    new Player(1170, 300),
     new Player(1000, 305),
+    new Player(1170, 300),
   ];
   ball = new Ball(600, 300);
   upDown = false;
@@ -437,13 +454,13 @@ document.onkeydown = function (e) {
 };
 
 function renderBall() {
-  c.save();
-  c.beginPath();
-  c.fillStyle = "brown";
-  c.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
-  c.fill();
-  c.closePath();
-  c.restore();
+  if(ballReady){
+    c.drawImage(ballImage, ball.x, ball.y, 10, 10);
+    // c.beginPath();
+    // c.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
+    // c.closePath();
+    c.restore();
+  }
 }
 
 function renderPlayers() {
