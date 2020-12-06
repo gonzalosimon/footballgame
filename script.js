@@ -34,23 +34,20 @@ var leftDown = false;
 var rightDown = false;
 var shoot = false;
 var pass = false;
-var soundID = "crowd";
 
-function loadSound() {
-  createjs.Sound.registerSound("assets/crowd.mp3", soundID);
+function playSound(sound) {
+  var song1 = document.getElementById('sound');
+  song1.volume = .25; // setting the volume to 25% because the sound is loud
+  if (song1.paused) {  // if song1 is paused
+    song1.play();
+  } else {
+    song1.pause();
+  }
 }
 
-function playSound() {
-  createjs.Sound.play(soundID);
-}
-
-document.getElementById("stopButton").onclick = function () {
-  var sounds = document.getElementsByTagName("audio");
-  for (i = 0; i < sounds.length; i++) sounds[i].pause();
-};
 
 $(function () {
-  $("#stopButton").on("click", function () {
+  $("#sound-icon").on("click", function () {
     $(this).toggleClass("fa-volume-up fa-volume-off");
     $(this).hasClass("fa-volume-off")
       ? console.log("Muting sound")

@@ -29,7 +29,7 @@
     <script src="https://code.createjs.com/1.0.0/soundjs.min.js"></script>
   </head>
 
-  <body onload="loadSound();">
+  <body>
     <h1>Football Game</h1>
 
     <p style="float: left; padding-left: 20%">
@@ -43,13 +43,18 @@
       >
     </p>
 
+
+
+    <audio id="sound">
+      <source src="assets/crowd.mp3" type="audio/mp3">
+    </audio>
     <i
-      class="volume-icon fa fa-volume-up fa-2x"
-      id="stopButton"
-      type="button"
-      value="Stop All Audio"
-    >
-    </i>
+    class="volume-icon fa fa-volume-up fa-2x"
+    id="sound-icon"
+    type="button"
+    onclick="playSound('sound')"
+  >
+  </i>
 
     <p class="score" id="blueteam_score"></p>
     <p class="score" id="redteam_score"></p>
@@ -138,7 +143,7 @@
       type="reset"
       value="Start Match"
       id="match"
-      onclick="style.display = 'none'; playSound(); start();"
+      onclick="style.display = 'none'; playSound('sound'); start();"
     />
   </body>
   <footer>
