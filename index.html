@@ -10,15 +10,26 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
       integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css" />
+    <link
+      href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css"
+      rel="stylesheet"
+    />
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.createjs.com/1.0.0/soundjs.min.js"></script>
   </head>
 
-  <body>
+  <body onload="loadSound();">
     <h1>Football Game</h1>
 
     <p style="float: left; padding-left: 20%">
@@ -27,44 +38,109 @@
           style="text-decoration: none"
           href="https://gbsimon.netlify.app"
         >
-          Check my website</a
+          Check out my website</a
         ></strong
       >
     </p>
+
+    <i
+      class="volume-icon fa fa-volume-up fa-2x"
+      id="stopButton"
+      type="button"
+      value="Stop All Audio"
+    >
+    </i>
+
     <p class="score" id="blueteam_score"></p>
     <p class="score" id="redteam_score"></p>
     <canvas id="canvas" width="1200" height="600"></canvas>
     <script src="script.js"></script>
-    <form class="select">
-      <div onclick="style.display = 'none'">
-        <!-- <p>Select a team</p> -->
 
-        <p>Select a player of the Blue Team</p>
-        <input type="reset" onclick="id='input_id'" value="0" />
-        <input type="reset" onclick="id='input_id'" value="1" />
-        <input type="reset" onclick="id='input_id'" value="2" />
-        <input type="reset" onclick="id='input_id'" value="3" />
-        <input type="reset" onclick="id='input_id'" value="4" />
-        <p>Or</p>
-        <p>Select a player of the Red Team</p>
-        <input type="reset" onclick="id='input_id'" value="5" />
-        <input type="reset" onclick="id='input_id'" value="6" />
-        <input type="reset" onclick="id='input_id'" value="7" />
-        <input type="reset" onclick="id='input_id'" value="8" />
-        <input type="reset" onclick="id='input_id'" value="9" />
+    <form onclick="style.display = 'none';" class="select">
+      <!-- <p>Select a team</p> -->
+      <h2>Main Menu</h2>
+      <p>Select a player of the Blue Team</p>
+      <div>
+        <input
+          class="button blue"
+          type="reset"
+          onclick="id='input_id'"
+          value="0"
+        />
+        <input
+          class="button blue"
+          type="reset"
+          onclick="id='input_id'"
+          value="1"
+        />
+        <input
+          class="button blue"
+          type="reset"
+          onclick="id='input_id'"
+          value="2"
+        />
+        <input
+          class="button blue"
+          type="reset"
+          onclick="id='input_id'"
+          value="3"
+        />
+        <input
+          class="button blue"
+          type="reset"
+          onclick="id='input_id'"
+          value="4"
+        />
       </div>
+      <p>Or</p>
+
+      <p>Select a player of the Red Team</p>
+      <div>
+        <input
+          class="button red"
+          type="reset"
+          onclick="id='input_id'"
+          value="5"
+        />
+        <input
+          class="button red"
+          type="reset"
+          onclick="id='input_id'"
+          value="6"
+        />
+        <input
+          class="button red"
+          type="reset"
+          onclick="id='input_id'"
+          value="7"
+        />
+        <input
+          class="button red"
+          type="reset"
+          onclick="id='input_id'"
+          value="8"
+        />
+        <input
+          class="button red"
+          type="reset"
+          onclick="id='input_id'"
+          value="9"
+        />
+      </div>
+      <div id="info-first"></div>
     </form>
 
     <div id="info"></div>
+
     <div id="alert"></div>
     <input
-      class="button"
+      class="start-button"
       type="reset"
       value="Start Match"
-      onclick="style.display = 'none'; start();"
+      id="match"
+      onclick="style.display = 'none'; playSound(); start();"
     />
   </body>
-
   <footer>
     <div class="footer">
       <div class="footer-statement">Contact</div>
@@ -78,7 +154,7 @@
           >
             <img
               class="linkedin"
-              src="./images/linkedin-logo.png"
+              src="assets/images/linkedin-logo.png"
               alt="Linkedin Logo"
             />
           </a>
@@ -88,16 +164,17 @@
             href="https://www.github.com/gb-simon/"
             target="_blank"
             rel="noopener noreferrer"
+            class="github"
           >
-            <img
-              class="github"
-              src="./images/github-logo.png"
-              alt="GitHub Logo"
-            />
+            <i class="fa fa-github"></i>
           </a>
         </div>
         <div class="social">
-          <a class="twitter" href="https://twitter.com/_gonzalosimon"
+          <a
+            href="https://twitter.com/_gonzalosimon"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="twitter"
             ><i class="fa fa-twitter"></i>
           </a>
         </div>
@@ -107,7 +184,11 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img class="email" src="./images/email-logo.png" alt="Email Logo" />
+            <img
+              class="email"
+              src="/assets/images/email-logo.png"
+              alt="Email Logo"
+            />
           </a>
         </div>
       </div>

@@ -34,17 +34,48 @@ var leftDown = false;
 var rightDown = false;
 var shoot = false;
 var pass = false;
-var clicked = false;
+var soundID = "crowd";
+
+function loadSound() {
+  createjs.Sound.registerSound("assets/crowd.mp3", soundID);
+}
+
+function playSound() {
+  createjs.Sound.play(soundID);
+}
+
+document.getElementById("stopButton").onclick = function () {
+  var sounds = document.getElementsByTagName("audio");
+  for (i = 0; i < sounds.length; i++) sounds[i].pause();
+};
+
+$(function () {
+  $("#stopButton").on("click", function () {
+    $(this).toggleClass("fa-volume-up fa-volume-off");
+    $(this).hasClass("fa-volume-off")
+      ? console.log("Muting sound")
+      : console.log("Unmuting Sound");
+  });
+});
 
 function start() {
   var team;
   var userChoice = document.getElementById("input_id").value;
-  //  document.getElementById('alert').innerHTML = 'You must select a player!';
-  if (userChoice > 4) {
-    team = "Red team";
-  } else {
-    team = "Blue team";
+  document.getElementById("input_id").style.display = "none";
+  if (document.getElementById("input_id").clicked == false) {
+    document.getElementById("alert").innerHTML = "You must select a player!";
   }
+  if (userChoice == undefined) {
+    document.getElementById("alert").innerHTML = "You must select a player!";
+    document.getElementById("match").style.display = "inline";
+  }
+  if (userChoice > 4) {
+    team = "Red team!";
+  } else {
+    team = "Blue team!";
+  }
+  document.getElementById("info-first").innerHTML =
+    "You selected the player " + userChoice + " of the " + team;
 
   document.getElementById("info").innerHTML =
     "You are the player number " + userChoice + " of the " + team;
@@ -77,7 +108,7 @@ function Ball(x, y) {
 function Player(x, y) {
   this.x = x;
   this.y = y;
-  this.size = 10;
+  this.size = 14;
   this.xVel = 0;
   this.yVel = 0;
   this.accel = 0.25;
