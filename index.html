@@ -10,21 +10,11 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
-      rel="stylesheet"
-    />
-    <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
       integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css" />
-    <link
-      href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css"
-      rel="stylesheet"
-    />
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.createjs.com/1.0.0/soundjs.min.js"></script>
   </head>
@@ -44,17 +34,18 @@
     </p>
 
 
-
+<div class="sound-section" unselectable="on">
     <audio id="sound">
       <source src="assets/crowd.mp3" type="audio/mp3">
     </audio>
     <i
-    class="volume-icon fa fa-volume-up fa-2x"
+    class="sound-icon tooltip fa fa-volume-up fa-2x"
     id="sound-icon"
     type="button"
     onclick="playSound('sound')"
-  >
-  </i>
+  > <span class="tooltiptext" >Mute/Unmute</span>
+  </i> 
+</div>
 
     <p class="score" id="blueteam_score"></p>
     <p class="score" id="redteam_score"></p>
@@ -141,7 +132,7 @@
     <input
       class="start-button"
       type="reset"
-      value="Start Match"
+      value="Start Match"0
       id="match"
       onclick="style.display = 'none'; playSound('sound'); start();"
     />
@@ -191,7 +182,7 @@
           >
             <img
               class="email"
-              src="/assets/images/email-logo.png"
+              src="assets/images/email-logo.png"
               alt="Email Logo"
             />
           </a>

@@ -28,13 +28,33 @@ body {
   margin: 4px 2px;
   cursor: pointer;
 }
-.volume-icon{
+.sound-icon{
   cursor: pointer;
   color: rgb(156, 156, 156);
 }
-.volume-icon:hover{
+.sound-icon:hover{
   color: white ;
-  background: url("https://img.icons8.com/metro/26/000000/no-audio.png") no-repeat;
+}
+.sound-section{
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  cursor: default;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  font-size: medium;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  /* Position the tooltip */
+}
+ .tooltip:hover .tooltiptext {
+    visibility: visible;
 }
 
 .start-button {
@@ -64,7 +84,7 @@ body {
 a {
   color: #fff;
 }
-a:hover {
+.twitter:hover {
   color: #1da1f2;
 }
 
@@ -113,7 +133,7 @@ a:link {
 .footer .social-links .social .github {
   width: 16px;
   height: 12px;
-  padding: 8px 0px 10px 8.5px;
+  padding: 8px 0px 10px 9px !important;
   display: flex;
 }
 

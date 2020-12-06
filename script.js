@@ -34,6 +34,7 @@ var leftDown = false;
 var rightDown = false;
 var shoot = false;
 var pass = false;
+var run = false;
 
 function playSound(sound) {
   var song1 = document.getElementById('sound');
@@ -79,7 +80,7 @@ function start() {
   console.log(userChoice);
   clear();
   renderBackground();
-  checkPlayers_PLayersCollision();
+  checkPlayers_PlayersCollision();
   checkPlayersBounds();
   checkBallBounds();
   checkPlayers_BallCollision();
@@ -99,18 +100,18 @@ function Ball(x, y) {
   this.xVel = 0;
   this.yVel = 0;
   this.decel = 0.038;
-  this.size = 6;
+  this.size = 5;
 }
 
 function Player(x, y) {
   this.x = x;
   this.y = y;
-  this.size = 14;
+  this.size = 11;
   this.xVel = 0;
   this.yVel = 0;
   this.accel = 0.25;
   this.decel = 0.55;
-  this.maxSpeed = 3.5;
+  this.maxSpeed = 2;
 }
 
 function reset() {
@@ -155,7 +156,7 @@ function checkPlayers_BallCollision() {
   }
 }
 
-function checkPlayers_PLayersCollision() {
+function checkPlayers_PlayersCollision() {
   //Collision blue player with another blue player
   for (let k = 0; k < 5; k++) {
     for (let i = 1; i < 5; i++) {
@@ -239,6 +240,7 @@ function moveBall() {
 }
 
 function checkBallBounds() {
+  
   // this means a point for the blue team
   if (ball.x + ball.size > canvas.width) {
     if (ball.y > 200 && ball.y < 400) {
@@ -251,13 +253,13 @@ function checkBallBounds() {
   }
 
   // this means a point for the red team
-  if (ball.x + ball.size < 0) {
+  if (ball.x - ball.size < 0) {
     if (ball.y > 200 && ball.y < 400) {
       redteam++;
       reset();
       return;
     }
-    ball.x = canvas.width - ball.size;
+    ball.x = 0 + ball.size;
     ball.xVel *= -1.5;
   }
 
@@ -272,7 +274,7 @@ function checkBallBounds() {
 }
 
 function checkPlayersBounds() {
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < 10; i++) {
     if (players[i].x + players[i].size > canvas.width) {
       players[i].x = canvas.width - players[i].size;
       players[i].xVel *= -0.5;
@@ -293,12 +295,47 @@ function checkPlayersBounds() {
 }
 
 function checkKeyboardStatus(userChoice) {
-  if (shoot) {
-    console.log("WorkingShoot");
+  
+ 
+
+    var dx = (players[userChoice].x - ball.x) / players[userChoice].size;
+    var dy = (players[userChoice].y - ball.y) / players[userChoice].size;
+
+
+  for (let i = 0; i < 10; i++) {
+    
+    //this var will allow me to shoot or to make a pass if the player is able to (if the player is close enough)
+    var isAble =
+      getDistance(players[i].x, players[i].y, ball.x, ball.y) -
+      players[i].size -
+      ball.size;
+
+
+  if(isAble < 17){
+    if (shoot) {
+      ball.xVel = 2 * (-dx);
+      ball.yVel = 2 * (-dy);
+      players[userChoice].xVel = dx;
+      players[userChoice].yVel = dy;
+      console.log("Shoots");
+    }
   }
-  if (pass) {
-    console.log("WorkingPass");
+  if(isAble < 17){
+    if (pass) {
+      ball.xVel = 1 * (-dx);
+      ball.yVel = 1 * (-dy);
+      players[userChoice].xVel = dx;
+      players[userChoice].yVel = dy;
+      console.log("Makes a pass");
+    }
   }
+}
+
+    if(run){
+      players[userChoice].maxSpeed = 3;
+    } else {
+      players[userChoice].maxSpeed = 2;
+    }
 
   if (upDown) {
     if (players[userChoice].yVel > -players[userChoice].maxSpeed) {
@@ -370,6 +407,9 @@ document.onkeyup = function (e) {
   if (e.keyCode === 90) {
     pass = false;
   }
+  if (e.keyCode === 67) {
+    run = false;
+  }
 };
 
 document.onkeydown = function (e) {
@@ -390,6 +430,9 @@ document.onkeydown = function (e) {
   }
   if (e.keyCode === 90) {
     pass = true;
+  }
+  if (e.keyCode === 67) {
+    run = true;
   }
 };
 
@@ -523,22 +566,22 @@ function renderBackground() {
 
   //Home L corner
   c.beginPath();
-  c.arc(0, 0, 8, 0, 0.5 * Math.PI, false);
+  c.arc(0, 0, 12, 0, 0.5 * Math.PI, false);
   c.stroke();
   c.closePath();
   //Home R corner
   c.beginPath();
-  c.arc(0, canvas.height, 8, 0, 2 * Math.PI, true);
+  c.arc(0, canvas.height, 12, 0, 2 * Math.PI, true);
   c.stroke();
   c.closePath();
   //Away R corner
   c.beginPath();
-  c.arc(canvas.width, 0, 8, 0.5 * Math.PI, 1 * Math.PI, false);
+  c.arc(canvas.width, 0, 12, 0.5 * Math.PI, 1 * Math.PI, false);
   c.stroke();
   c.closePath();
   //Away L corner
   c.beginPath();
-  c.arc(canvas.width, canvas.height, 8, 1 * Math.PI, 1.5 * Math.PI, false);
+  c.arc(canvas.width, canvas.height, 12, 1 * Math.PI, 1.5 * Math.PI, false);
   c.stroke();
   c.closePath();
 
