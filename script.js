@@ -100,19 +100,6 @@ var showCredits = function () {
   document.getElementById("newGame").style.display = "none";
   document.getElementById("credits").style.display = "block";
   document.getElementById("backBtn").style.display = "block";
-  document.getElementById("match").style.display = "none";
-  document.getElementById("penalty").style.display = "none";
-};
-
-var gameModes = function () {
-  document.getElementById("theHead").style.display = "none";
-  document.getElementById("aboutBtn").style.display = "none";
-  document.getElementById("newGame").style.display = "none";
-  document.getElementById("credits").style.display = "none";
-  document.getElementById("backBtn").style.display = "block";
-  document.getElementById("gameModes").style.display = "block";
-  document.getElementById("match").style.display = "block";
-  document.getElementById("penalty").style.display = "block";
 };
 
 var goBack = function () {
@@ -121,9 +108,6 @@ var goBack = function () {
   document.getElementById("theHead").style.display = "block";
   document.getElementById("newGame").style.display = "block";
   document.getElementById("aboutBtn").style.display = "block";
-  document.getElementById("gameModes").style.display = "block";
-  document.getElementById("match").style.display = "none";
-  document.getElementById("penalty").style.display = "none";
 };
 
 var quickMatch = function () {
@@ -136,9 +120,6 @@ var quickMatch = function () {
   document.getElementById("theHead").style.display = "none";
   document.getElementById("newGame").style.display = "none";
   document.getElementById("aboutBtn").style.display = "none";
-  document.getElementById("gameModes").style.display = "none";
-  document.getElementById("match").style.display = "none";
-  document.getElementById("penalty").style.display = "none";
   clear();
   renderBackground();
   checkPlayers_PlayersCollision();
