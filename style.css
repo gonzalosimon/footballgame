@@ -180,7 +180,7 @@ a:link {
   font-weight: bold;
   font-family: "Courier New";
   margin: 5px auto;
-  cursor: pointer;
+  cursor: pointer; 
 }
 #theHead{
   margin: auto;
@@ -194,9 +194,15 @@ a:link {
   font-family: "Courier New";
   display: none;
 }
-#backBtn{
+#backBtn, #match, #penalty{
   margin: auto;
   font-size: 1em;
   font-family: "Courier New";
   display: none;
+}
+
+#gameModes{
+  margin: auto;
+  font-size: 2em;
+  font-family: "Courier New";
 }
