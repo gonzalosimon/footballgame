@@ -16,11 +16,49 @@
       crossorigin="anonymous"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.createjs.com/1.0.0/soundjs.min.js"></script>
   </head>
 
   <body>
-    <h1>Football Game</h1>
+    <div id="theHead">
+      <h1 >Footaball Game </h1>
+        <h3>Main Menu</h3>
+
+    </div>
+
+    <div id="newGame" onclick="playSound('sound'); quickMatch()">Quick Match</div>
+
+    <div id="backBtn" onclick="goBack()">Back</div>
+
+    <div id="aboutBtn" onclick="showCredits()">About</div>
+    <div id="credits">Made by Gonzalo</div>
+    <div id="backBtn" onclick="goBack()">Back</div>
+
+    <canvas id="game" width="1200" height="600"></canvas>
+    
+    </div>
+    <script src="script.js"></script>
+    <!-- <p>Select a Team</p> -->
+    
+    <!-- <div>
+      <button
+        class="button blue"
+        type="reset"
+        onclick="id='team-selected'"
+        value="0"
+      >
+        Blue Team
+      </button>
+      <button
+        class="button red"
+        type="reset"
+        onclick="id='team-selected'"
+        value="5"
+      >
+        Red Team
+      </button>
+    </div>
+    <div id="info"></div>
+    </div>
 
     <p style="float: left; padding-left: 20%">
       <strong>
@@ -29,114 +67,51 @@
           href="https://gbsimon.netlify.app"
         >
           Check out my website</a
-        ></strong
-      >
+        >
+      </strong>
     </p>
-
-
-<div class="sound-section" unselectable="on">
-    <audio id="sound">
-      <source src="assets/crowd.mp3" type="audio/mp3">
-    </audio>
-    <i
-    class="sound-icon tooltip fa fa-volume-up fa-2x"
-    id="sound-icon"
-    type="button"
-    onclick="playSound('sound')"
-  > <span class="tooltiptext" >Mute/Unmute</span>
-  </i> 
-</div>
+-->
+    <div class="sound-section" unselectable="on">
+      <audio id="sound">
+        <source src="assets/crowd.mp3" type="audio/mp3" />
+      </audio>
+      <i
+        class="sound-icon tooltip fa fa-volume-up fa-2x"
+        id="sound-icon"
+        type="button"
+        onclick="playSound('sound')"
+      >
+        <span class="tooltiptext">Mute/Unmute</span>
+      </i>
+    </div>
 
     <p class="score" id="blueteam_score"></p>
     <p class="score" id="redteam_score"></p>
-    <canvas id="canvas" width="1200" height="600"></canvas>
-    <script src="script.js"></script>
 
-    <form onclick="style.display = 'none';" class="select">
-      <!-- <p>Select a team</p> -->
-      <h2>Main Menu</h2>
-      <p>Select a player of the Blue Team</p>
-      <div>
-        <button
-          class="button blue"
-          type="reset"
-          onclick="id='input_id'"
-          value="0">10
-        </button>
-        <button
-          class="button blue"
-          type="reset"
-          onclick="id='input_id'"
-          value="1"
-        >22</button>
-        <button
-          class="button blue"
-          type="reset"
-          onclick="id='input_id'"
-          value="2"
-        >7</button>
-        <button
-          class="button blue"
-          type="reset"
-          onclick="id='input_id'"
-          value="3"
-        >3</button>
-        <button
-          class="button blue"
-          type="reset"
-          onclick="id='input_id'"
-          value="4"
-        >1
-      </button>
-      </div>
-      <p>Or</p>
 
-      <p>Select a player of the Red Team</p>
-      <div>
-        <button
-          class="button red"
-          type="reset"
-          onclick="id='input_id'"
-          value="5"
-        >9</button>
-        <button
-          class="button red"
-          type="reset"
-          onclick="id='input_id'"
-          value="6"
-        >11</button>
-        <button
-          class="button red"
-          type="reset"
-          onclick="id='input_id'"
-          value="7"
-        >21</button>
-        <button
-          class="button red"
-          type="reset"
-          onclick="id='input_id'"
-          value="8"
-        >5</button>
-        <button
-          class="button red"
-          type="reset"
-          onclick="id='input_id'"
-          value="9"
-        >1</button>
-      </div>
-      <div id="info-first"></div>
+    <!-- 
+
+    <form class="select">    
+
     </form>
 
-    <div id="info"></div>
-
-    <div id="alert"></div>
     <input
-      class="start-button"
+      class="start-button"    <script src="script.js"></script>
+      <div id="theHead">Footaball Game <h2>Main Menu</h2></div>
+      <div id="newGame" onclick="runGame()">New Game</div>
+      <div id="creditBtn" onclick="showCredits()">Credits</div>
+      <div id="credits">Made by Gonzalo</div>
+      <div id="backBtn" onclick="goBack()">Back</div>
+      <div id="main">
+      <div id="score"></div>
+      <canvas id="canvas" width="1200" height="600"></canvas>
+      </div>
+      <script src="script.js"></script>
       type="reset"
       value="Start Match"
-      id="match"
+      id='match'
       onclick="style.display = 'none'; playSound('sound'); start();"
-    />
+    /> -->
   </body>
   <footer>
     <div class="footer">

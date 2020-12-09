@@ -18,7 +18,7 @@ body {
 .score {
   font-style: oblique;
   font-size: large;
-  padding-right: 10%;
+  padding-right: 20%;
 }
 .button{
   border: none;
@@ -170,108 +170,33 @@ a:link {
 }
 
 
-
-
-#quiz {
-  margin: -44px 50px 0px;
-  position: relative;
-  width: calc(100% - 100px);
-}
-
-#quiz h1 {
-  color: #FAFAFA;
-  font-weight: 600;
-  font-size: 36px;
-  text-transform: uppercase;
-  text-align: left;
-  line-height: 44px;
-}
-
-#quiz button {
-  float: right;
-  margin: 8px 0px 0px 8px;
-  padding: 4px 8px;
-  background: #9ACFCC;
-  color: #00403C;
-  font-size: 14px;
-  cursor: pointer;
-  outline: none;
-}
-
-#quiz button:hover {
-  background: #36a39c;
-  color: #FFF;
-}
-
-#quiz button:disabled {
-  opacity: 0.5;
-  background: #9ACFCC;
-  color: #00403C;
-  cursor: default;
-}
-
-#question {
-  padding: 20px;
-  background: #FAFAFA;
-}
-
-#question h2 {
-  margin-bottom: 16px;
-  font-weight: 600;
-  font-size: 20px;
-}
-
-#question input[type=radio] {
+#main{
   display: none;
 }
-
-#question label {
-  display: inline-block;
-  margin: 4px;
-  padding: 8px;
-  background: #FAE3BB;
-  color: #4C3000;
-  width: calc(50% - 8px);
-  min-width: 100px;
+#newGame, #aboutBtn, #backBtn{
+  text-align: center;
+  vertical-align: middle;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: "Courier New";
+  margin: 5px auto;
   cursor: pointer;
 }
-
-#question label:hover {
-  background: #EBBB67;
+#theHead{
+  margin: auto;
+  color: rgb(255, 255, 255);
+  font-size: 2em;
+  font-family: "Courier New";
 }
-
-#question input[type=radio]:checked + label {
-  background: #CB8306;
-  color: #FAFAFA;
+#credits{
+  margin: auto;
+  font-size: 1em;
+  font-family: "Courier New";
+  display: none;
 }
-
-#quiz-results {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: absolute;
-  top: 44px;
-  left: 0px;
-  background: #FAFAFA;
-  width: 100%;
-  height: calc(100% - 44px);
-}
-
-#quiz-results-message {
-  display: block;
-  color: #00403C;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-#quiz-results-score {
-  display: block;
-  color: #31706c;
-  font-size: 20px;
-}
-
-#quiz-results-score b {
-  color: #00403C;
-  font-weight: 600;
-  font-size: 20px;
+#backBtn{
+  margin: auto;
+  font-size: 1em;
+  font-family: "Courier New";
+  display: none;
 }

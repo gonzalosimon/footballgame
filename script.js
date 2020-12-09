@@ -1,14 +1,11 @@
-var canvas = document.getElementById("canvas");
+var canvas = document.getElementById("game");
 var c = canvas.getContext("2d");
-var redteam_score = document.getElementById("redteam_score");
-var blueteam_score = document.getElementById("blueteam_score");
+
 window.requestAnimationFrame =
   window.requestAnimationFrame ||
   window.mozRequestAnimationFrame ||
   window.webkitRequestAnimationFrame ||
   window.msRequestAnimationFrame;
-
-
 
 let blueteam = 0;
 let redteam = 0;
@@ -30,18 +27,44 @@ let players = [
 ];
 
 ball = new Ball(600, 300);
-var imgPath = "assets/images/ball.png";
+var ballPath = "assets/images/ball.png";
 //The path to the image that we want to add.
 var ballReady = false;
 var ballImage = new Image();
 
 //Create a new Image object.
-ballImage.onload = function(){
+ballImage.onload = function () {
   //Draw the image onto the canvas.
- ballReady = true;
-}
+  ballReady = true;
+};
 //Set the src of this Image object.
-ballImage.src = imgPath;
+ballImage.src = ballPath;
+
+var BluePath = "assets/images/Blue.png";
+//The path to the image that we want to add.
+var BluePlayerReady = false;
+var BlueImage = new Image();
+
+//Create a new Image object.
+BlueImage.onload = function () {
+  //Draw the image onto the canvas.
+  BluePlayerReady = true;
+};
+//Set the src of this Image object.
+BlueImage.src = BluePath;
+
+var RedPath = "assets/images/Red.png";
+//The path to the image that we want to add.
+var RedPlayerReady = false;
+var RedImage = new Image();
+
+//Create a new Image object.
+RedImage.onload = function () {
+  //Draw the image onto the canvas.
+  RedPlayerReady = true;
+};
+//Set the src of this Image object.
+RedImage.src = RedPath;
 
 var upDown = false;
 var downDown = false;
@@ -52,16 +75,15 @@ var pass = false;
 var run = false;
 
 function playSound(sound) {
-  var song1 = document.getElementById('sound');
-  song1.volume = .25; // setting the volume to 25% because the sound is loud
-  if (song1.paused) {  // if song1 is paused
+  var song1 = document.getElementById("sound");
+  song1.volume = 0.25; // setting the volume to 25% because the sound is loud
+  if (song1.paused) {
+    // if song1 is paused
     song1.play();
   } else {
     song1.pause();
   }
 }
-
-
 
 $(function () {
   $("#sound-icon").on("click", function () {
@@ -72,28 +94,32 @@ $(function () {
   });
 });
 
-function start() {
-  var team;
-  var userChoice = document.getElementById("input_id").value;
-  document.getElementById("input_id").style.display = "none";
-  if (document.getElementById("input_id").clicked == false) {
-    document.getElementById("alert").innerHTML = "You must select a player!";
-  }
-  if (userChoice == undefined) {
-    document.getElementById("alert").innerHTML = "You must select a player!";
-    document.getElementById("match").style.display = "inline";
-  }
-  if (userChoice > 4) {
-    team = "Red team!";
-  } else {
-    team = "Blue team!";
-  }
-  document.getElementById("info-first").innerHTML =
-    "You selected the player " + userChoice + " of the " + team;
+var showCredits = function () {
+  document.getElementById("theHead").style.display = "none";
+  document.getElementById("aboutBtn").style.display = "none";
+  document.getElementById("newGame").style.display = "none";
+  document.getElementById("credits").style.display = "block";
+  document.getElementById("backBtn").style.display = "block";
+};
 
-  document.getElementById("info").innerHTML =
-    "You are the player number " + userChoice + " of the " + team;
-  console.log(userChoice);
+var goBack = function () {
+  document.getElementById("backBtn").style.display = "none";
+  document.getElementById("credits").style.display = "none";
+  document.getElementById("theHead").style.display = "block";
+  document.getElementById("newGame").style.display = "block";
+  document.getElementById("aboutBtn").style.display = "block";
+};
+
+var quickMatch = function () {
+  var userChoice = 0;
+  let blueteam_score = document.getElementById("blueteam_score");
+  let redteam_score = document.getElementById("redteam_score");
+
+  document.getElementById("backBtn").style.display = "none";
+  document.getElementById("credits").style.display = "none";
+  document.getElementById("theHead").style.display = "none";
+  document.getElementById("newGame").style.display = "none";
+  document.getElementById("aboutBtn").style.display = "none";
   clear();
   renderBackground();
   checkPlayers_PlayersCollision();
@@ -107,13 +133,12 @@ function start() {
   checkKeyboardStatus(userChoice);
   blueteam_score.innerHTML = "Blue Team Score: " + blueteam;
   redteam_score.innerHTML = "Red Team Score: " + redteam;
-  requestAnimationFrame(start);
-}
+  requestAnimationFrame(quickMatch);
+};
 
 function Ball(x, y) {
   this.x = x;
   this.y = y;
-
   this.xVel = 0;
   this.yVel = 0;
   this.decel = 0.038;
@@ -123,7 +148,7 @@ function Ball(x, y) {
 function Player(x, y) {
   this.x = x;
   this.y = y;
-  this.size = 11;
+  this.size = 15;
   this.xVel = 0;
   this.yVel = 0;
   this.accel = 0.25;
@@ -257,7 +282,6 @@ function moveBall() {
 }
 
 function checkBallBounds() {
-  
   // this means a point for the blue team
   if (ball.x + ball.size > canvas.width) {
     if (ball.y > 200 && ball.y < 400) {
@@ -312,47 +336,41 @@ function checkPlayersBounds() {
 }
 
 function checkKeyboardStatus(userChoice) {
-  
- 
-
-    var dx = (players[userChoice].x - ball.x) / players[userChoice].size;
-    var dy = (players[userChoice].y - ball.y) / players[userChoice].size;
-
+  var dx = (players[userChoice].x - ball.x) / players[userChoice].size;
+  var dy = (players[userChoice].y - ball.y) / players[userChoice].size;
 
   for (let i = 0; i < 10; i++) {
-    
     //this var will allow me to shoot or to make a pass if the player is able to (if the player is close enough)
     var isAble =
       getDistance(players[i].x, players[i].y, ball.x, ball.y) -
       players[i].size -
       ball.size;
 
-
-  if(isAble < 17){
-    if (shoot) {
-      ball.xVel = 2 * (-dx);
-      ball.yVel = 2 * (-dy);
-      players[userChoice].xVel = dx;
-      players[userChoice].yVel = dy;
-      console.log("Shoots");
+    if (isAble < 17) {
+      if (shoot) {
+        ball.xVel = 2 * -dx;
+        ball.yVel = 2 * -dy;
+        players[userChoice].xVel = dx;
+        players[userChoice].yVel = dy;
+        console.log("Shoots");
+      }
+    }
+    if (isAble < 17) {
+      if (pass) {
+        ball.xVel = 1 * -dx;
+        ball.yVel = 1 * -dy;
+        players[userChoice].xVel = dx;
+        players[userChoice].yVel = dy;
+        console.log("Makes a pass");
+      }
     }
   }
-  if(isAble < 17){
-    if (pass) {
-      ball.xVel = 1 * (-dx);
-      ball.yVel = 1 * (-dy);
-      players[userChoice].xVel = dx;
-      players[userChoice].yVel = dy;
-      console.log("Makes a pass");
-    }
-  }
-}
 
-    if(run){
-      players[userChoice].maxSpeed = 3;
-    } else {
-      players[userChoice].maxSpeed = 2;
-    }
+  if (run) {
+    players[userChoice].maxSpeed = 3;
+  } else {
+    players[userChoice].maxSpeed = 2;
+  }
 
   if (upDown) {
     if (players[userChoice].yVel > -players[userChoice].maxSpeed) {
@@ -454,32 +472,48 @@ document.onkeydown = function (e) {
 };
 
 function renderBall() {
-  if(ballReady){
-    c.drawImage(ballImage, ball.x, ball.y, 10, 10);
+  if (ballReady) {
+    c.drawImage(ballImage, ball.x, ball.y, 15, 15);
     // c.beginPath();
     // c.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
     // c.closePath();
-    c.restore();
   }
 }
-
 function renderPlayers() {
   c.save();
   for (let i = 0; i < 5; i++) {
-    c.beginPath();
-    c.fillStyle = "blue"; //player color
-    c.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
-    c.fill();
-    c.closePath();
+    // c.beginPath();
+    // c.fillStyle = "blue"; //player color
+    // c.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
+    // c.fill();
+    // c.closePath();
+
+    if (ballReady) {
+      c.drawImage(
+        BlueImage,
+        players[i].x,
+        players[i].y,
+        players[i].size - 0.5,
+        players[i].size * 2.5
+      );
+    }
   }
   for (let i = 5; i < 10; i++) {
-    c.beginPath();
-    c.fillStyle = "red";
-    c.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
-    c.fill();
-    c.closePath();
+    if (ballReady) {
+      c.drawImage(
+        RedImage,
+        players[i].x,
+        players[i].y,
+        players[i].size - 0.5,
+        players[i].size * 2.5
+      );
+    }
+    // c.beginPath();
+    // c.fillStyle = "red";
+    // c.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
+    // c.fill();
+    // c.closePath();
   }
-  c.restore();
 }
 
 function renderBackground() {
