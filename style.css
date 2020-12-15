@@ -1,45 +1,14 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);
 
-
-body {
-  background-color: #2E706C;
-  text-align: center;
-  color: white;
-  font-family: Monaco, monospace;
-}
-
-.select {
-  position: absolute;
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
-}
-
-.score {
-  font-style: oblique;
-  font-size: large;
-  padding-right: 20%;
-}
-.button{
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-.sound-icon{
+.sound-icon {
   cursor: pointer;
   color: rgb(156, 156, 156);
 }
-.sound-icon:hover{
-  color: white ;
+.sound-icon:hover {
+  color: white;
 }
-.sound-section{
-  -webkit-user-select: none; /* Safari */        
+.sound-section {
+  -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
@@ -56,44 +25,80 @@ body {
   padding: 8px;
   /* Position the tooltip */
 }
- .tooltip:hover .tooltiptext {
-    visibility: visible;
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 
-.start-button {
-  position: absolute;
-  left: 50%;
-  top: 60%;
-  transform: translate(-50%, -50%);
-  margin-top: 2%;
-  line-height: 60px;
+/* Menu Buttons */
+#main {
+  display: none;
+}
+
+#theHead {
+  font-size: xx-large;
+}
+
+#newGame,
+#aboutBtn,
+#backBtn {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 30px;
   font-weight: bold;
-  padding: 0 40px;
-  background: salmon;
-  border: none;
+  font-family: "Courier New";
+  margin: 5px auto;
   cursor: pointer;
 }
-.start-button:hover {
-  background: lightsalmon;
-}
-.blue{
-  background-color: #008CBA;
 
+#credits {
+  margin: auto;
+  display: none;
 }
-.red {
-  background-color: #f44336
-}
-
-a {
-  color: #fff;
-}
-.twitter:hover {
-  color: #1da1f2;
+#backBtn {
+  margin: auto;
+  display: none;
 }
 
-a:link {
-  text-decoration: none !important;
-  color: black !important;
+/* Footer */
+
+.footer .social-links .social {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+
+.footer .social-links .social-last {
+  width: 32px;
+  height: 32px;
+  margin-right: 0px;
+}
+
+.github {
+  width: 16px;
+  height: 12px;
+  padding: 8px 0px 10px 9px !important;
+  display: flex;
+}
+
+.twitter {
+  width: 16px;
+  height: 12px;
+  padding: 8px 0px 10px 8.5px;
+  display: flex;
+}
+
+.linkedin {
+  width: 16px;
+  height: 14px;
+  padding: 8px 0px 10px 9px !important;
+  display: flex;
+}
+
+.envelope {
+  width: 16px;
+  height: 12px;
+  padding: 8px 0px 10px 8px !important;
+  display: flex;
 }
 
 /* Footer */
@@ -131,72 +136,4 @@ a:link {
   width: 32px;
   height: 32px;
   margin-right: 0px;
-}
-
-.footer .social-links .social .github {
-  width: 16px;
-  height: 12px;
-  padding: 8px 0px 10px 9px !important;
-  display: flex;
-}
-
-.footer .social-links .social .twitter {
-  width: 16px;
-  height: 12px;
-  padding: 8px 0px 10px 8.5px;
-  display: flex;
-}
-
-.footer .social-links .social .linkedin {
-  width: 16px;
-  height: 14px;
-  padding: 8px 8px 10px 8px;
-}
-
-.footer .social-links .social .github {
-  width: 16px;
-  height: 12px;
-  padding: 10px 8px 10px 8px;
-}
-
-.footer .social-links .social-last .email {
-  width: 16px;
-  height: 12px;
-  padding: 10px 8px 10px 8px;
-}
-
-.box.active {
-  color: red;
-}
-
-
-#main{
-  display: none;
-}
-#newGame, #aboutBtn, #backBtn{
-  text-align: center;
-  vertical-align: middle;
-  font-size: 30px;
-  font-weight: bold;
-  font-family: "Courier New";
-  margin: 5px auto;
-  cursor: pointer;
-}
-#theHead{
-  margin: auto;
-  color: rgb(255, 255, 255);
-  font-size: 2em;
-  font-family: "Courier New";
-}
-#credits{
-  margin: auto;
-  font-size: 1em;
-  font-family: "Courier New";
-  display: none;
-}
-#backBtn{
-  margin: auto;
-  font-size: 1em;
-  font-family: "Courier New";
-  display: none;
 }

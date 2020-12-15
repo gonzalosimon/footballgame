@@ -4,134 +4,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
     <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <title>Football Game</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-      crossorigin="anonymous"
-    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
 
-  <body>
-    <div id="theHead">
-      <h1 >Footaball Game </h1>
+  <body
+    class="bg-gradient-to-r from-teal-400 to-green-500 text-center text-white font-sans"
+  >
+    <div>
+      <div id="theHead">
+        <h1>Footaball Game</h1>
         <h3>Main Menu</h3>
 
-    </div>
-
-    <div id="newGame" onclick="playSound('sound'); quickMatch()">Quick Match</div>
-
-    <div id="backBtn" onclick="goBack()">Back</div>
-
-    <div id="aboutBtn" onclick="showCredits()">About</div>
-    <div id="credits">Made by Gonzalo</div>
-    <div id="backBtn" onclick="goBack()">Back</div>
-
-    <canvas id="game" width="1200" height="600"></canvas>
-    
-    </div>
-    <script src="script.js"></script>
-    <!-- <p>Select a Team</p> -->
-    
-    <!-- <div>
-      <button
-        class="button blue"
-        type="reset"
-        onclick="id='team-selected'"
-        value="0"
-      >
-        Blue Team
-      </button>
-      <button
-        class="button red"
-        type="reset"
-        onclick="id='team-selected'"
-        value="5"
-      >
-        Red Team
-      </button>
-    </div>
-    <div id="info"></div>
-    </div>
-
-    <p style="float: left; padding-left: 20%">
-      <strong>
-        Made by Gonzalo Simon.<a
-          style="text-decoration: none"
-          href="https://gbsimon.netlify.app"
-        >
-          Check out my website</a
-        >
-      </strong>
-    </p>
--->
-    <div class="sound-section" unselectable="on">
-      <audio id="sound">
-        <source src="assets/crowd.mp3" type="audio/mp3" />
-      </audio>
-      <i
-        class="sound-icon tooltip fa fa-volume-up fa-2x"
-        id="sound-icon"
-        type="button"
-        onclick="playSound('sound')"
-      >
-        <span class="tooltiptext">Mute/Unmute</span>
-      </i>
-    </div>
-
-    <p class="score" id="blueteam_score"></p>
-    <p class="score" id="redteam_score"></p>
-
-
-    <!-- 
-
-    <form class="select">    
-
-    </form>
-
-    <input
-      class="start-button"    <script src="script.js"></script>
-      <div id="theHead">Footaball Game <h2>Main Menu</h2></div>
-      <div id="newGame" onclick="runGame()">New Game</div>
-      <div id="creditBtn" onclick="showCredits()">Credits</div>
-      <div id="credits">Made by Gonzalo</div>
-      <div id="backBtn" onclick="goBack()">Back</div>
-      <div id="main">
-      <div id="score"></div>
-      <canvas id="canvas" width="1200" height="600"></canvas>
+        <div class="sound-section" unselectable="on">
+          <audio id="crowd">
+            <source src="assets/crowd.mp3" type="audio/mp3" />
+          </audio>
+          <i
+            class="sound-icon tooltip fa fa-volume-up fa-2x"
+            id="sound-icon"
+            type="button"
+            onclick="playSound('crowd')"
+          >
+            <span class="tooltiptext">Mute/Unmute</span>
+          </i>
+        </div>
       </div>
-      <script src="script.js"></script>
-      type="reset"
-      value="Start Match"
-      id='match'
-      onclick="style.display = 'none'; playSound('sound'); start();"
-    /> -->
-  </body>
-  <footer>
-    <div class="footer">
-      <div class="footer-statement">Contact</div>
 
-      <div class="social-links">
-        <div class="social">
+      <div class="from-orange-400 to-orange-700">
+        <button
+          class="bg-gradient-to-r text-white w-1/4 hover:from-teal-400 hover:to-blue-500 flex items-center justify-center text-white"
+          id="newGame"
+          onclick="playSound('crowd'); quickMatch();"
+        >
+          Quick Match
+        </button>
+
+        <button
+          class="bg-gradient-to-r mt-8 text-white w-1/4 flex hover:from-teal-400 hover:to-blue-500 items-center justify-center text-white"
+          id="backBtn"
+          onclick="goBack()"
+        >
+          Back
+        </button>
+
+        <button
+          class="bg-gradient-to-r text-white w-1/4 flex hover:from-teal-400 hover:to-blue-500 items-center justify-center text-white"
+          id="aboutBtn"
+          onclick="showCredits()"
+        >
+          About
+        </button>
+        <div id="credits">
+          Made by Gonzalo Simon.
+          <p>I'm a web-developer from Argentina, this is one of my projects.</p>
+        </div>
+        <button
+          class="bg-gradient-to-r text-white w-1/4 text-white inline-block text-base cursor-pointer w-1/4 flex items-center justify-center rounded-md border border-gray-300"
+          id="backBtn"
+          onclick="goBack()"
+        >
+          Back
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <canvas id="game" width="1200" height="600"></canvas>
+      <script src="script.js"></script>
+
+      <p class="text-1xl" id="blueteam_score"></p>
+      <p class="text-1xl" id="redteam_score"></p>
+    </div>
+  </body>
+
+  <footer>
+    <div class="footer text-center flex flex-wrap items-center">
+      <div
+        class="social-links flex rounded-full bg justify-center mx-auto flex"
+      >
+        <div class="rounded-full bg-black social">
           <a
             href="https://www.linkedin.com/in/gonzalo-simon-aguilar/?locale=en_US/"
             target="_blank"
             rel="noopener noreferrer"
+            class="linkedin"
           >
-            <img
-              class="linkedin"
-              src="assets/images/linkedin-logo.png"
-              alt="Linkedin Logo"
-            />
+            <i class="fa fa-linkedin"></i>
           </a>
         </div>
-        <div class="social">
+        <div class="social rounded-full bg-black">
           <a
             href="https://www.github.com/gb-simon/"
             target="_blank"
@@ -141,7 +111,7 @@
             <i class="fa fa-github"></i>
           </a>
         </div>
-        <div class="social">
+        <div class="social rounded-full bg-black">
           <a
             href="https://twitter.com/_gonzalosimon"
             target="_blank"
@@ -150,17 +120,14 @@
             ><i class="fa fa-twitter"></i>
           </a>
         </div>
-        <div class="social-last">
+        <div class="social-last rounded-full bg-black">
           <a
             href="mailto:aguilarsimon01@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
+            class="envelope"
           >
-            <img
-              class="email"
-              src="assets/images/email-logo.png"
-              alt="Email Logo"
-            />
+            <i class="fa fa-envelope"></i>
           </a>
         </div>
       </div>
