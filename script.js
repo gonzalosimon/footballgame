@@ -18,7 +18,7 @@ var run = false;
 var restart = false;
 function updateHTML(elmId, value) {
   var elem = document.getElementById(elmId);
-  if(typeof elem !== 'undefined' && elem !== null) {
+  if (typeof elem !== "undefined" && elem !== null) {
     elem.innerHTML = value;
   }
 }
@@ -739,7 +739,7 @@ function directions() {
     ball.size;
 
   // if the red player is close to the ball he will go for it
-  if (ball_distance < 125) {
+  if (ball_distance < 100) {
     players[5].xVel = -dx;
     players[5].yVel = -dy;
     console.log("Red player is looking for the ball");
@@ -756,13 +756,19 @@ function directions() {
 
     if (players[5].x > 1000) {
       console.log("not in the right direction axis x");
-
       players[5].x = players[5].x + 5;
       ball.x = ball.x - 5;
+   
     }
-    if (players[5].x < 100) {
-      console.log("not in the right direction axis x");
+    if (players[5].x < 150) {
+      players[5].x = players[5].x - 5;
       ball.x = ball.x + 5;
+      if(players[5].y > 375){
+        ball.y = ball.y - 3;
+      } else if (players[5].y < 225){
+        ball.y = ball.y + 3;
+      }
+      
     }
     // Here I check if the player goes in the right direction related to axis y
     if (players[5].y < 150 || players[5].y > 500) {
@@ -773,19 +779,6 @@ function directions() {
       } else if (players[5].y > 375) {
         players[5].y - 20;
         ball.y--;
-      }
-      if (players[5].x < 110) {
-        if (players.y < 275) {
-          players[5].y--;
-          ball.y--;
-          ball.x--;
-        }
-      }
-      if (players[5].x < 110) {
-        if (players.y > 375) {
-          players[5].y--;
-          ball.y++;
-        }
       }
     }
   }
