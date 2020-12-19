@@ -33,6 +33,9 @@
 #main {
   display: none;
 }
+#instructions{
+  display: none;
+}
 
 #theHead {
   font-size: xx-large;

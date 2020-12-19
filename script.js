@@ -1,6 +1,8 @@
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
+
 canvas.style.display = "none";
+
 window.requestAnimationFrame =
   window.requestAnimationFrame ||
   window.mozRequestAnimationFrame ||
@@ -12,9 +14,14 @@ var down = false;
 var left = false;
 var right = false;
 var shoot = false;
-var pass = false;
 var run = false;
-
+var restart = false;
+function updateHTML(elmId, value) {
+  var elem = document.getElementById(elmId);
+  if(typeof elem !== 'undefined' && elem !== null) {
+    elem.innerHTML = value;
+  }
+}
 function playSound(sound) {
   var crowd = document.getElementById("crowd");
   crowd.volume = 0.25; // setting the volume to 25% because the sound is loud
@@ -52,7 +59,9 @@ var goBack = function () {
 };
 
 quickMatch = () => {
+  instructions.style.display = "block";
   canvas.style.display = "block";
+
   var userChoice = 0;
   let blueteam_score = document.getElementById("blueteam_score");
   let redteam_score = document.getElementById("redteam_score");
@@ -62,7 +71,10 @@ quickMatch = () => {
   document.getElementById("theHead").style.display = "none";
   document.getElementById("newGame").style.display = "none";
   document.getElementById("aboutBtn").style.display = "none";
-
+  if (restart) {
+    console.log("restarting match");
+    reset();
+  }
   //Render functions
   clear();
   renderBackground();
@@ -73,6 +85,7 @@ quickMatch = () => {
   movePlayers();
   moveBall();
   keyboardMoves(userChoice);
+  directions();
 
   //Bounce functions
   players_Ball_Collision();
@@ -103,8 +116,8 @@ class Player {
     this.size = 15;
     this.xVel = 0;
     this.yVel = 0;
-    this.accel = 0.5;
-    this.decel = 0.5;
+    this.accel = 2;
+    this.decel = 2;
     this.maxSpeed = 2;
   }
 }
@@ -114,45 +127,52 @@ let redteam = 0;
 
 let players = [
   //blue
-  new Player(435, 300),
-  new Player(300, 150),
-  new Player(300, 450),
-  new Player(180, 285),
-  new Player(30, 290),
+  new Player(450, 325),
+  new Player(300, 100),
+  new Player(300, 500),
+  new Player(200, 300),
+  new Player(30, 300),
 
   //red
-  new Player(770, 300),
-  new Player(800, 475),
-  new Player(800, 150),
-  new Player(1000, 305),
+  new Player(750, 275),
+  new Player(900, 500),
+  new Player(900, 100),
+  new Player(1000, 300),
   new Player(1170, 300),
 ];
 
 ball = new Ball(600, 300);
 
 // Bounce functions
-
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 function reset() {
   players = [
     //blue
-    new Player(435, 300),
-    new Player(300, 150),
-    new Player(300, 450),
-    new Player(180, 285),
-    new Player(30, 290),
+    new Player(450, 300),
+    new Player(300, 100),
+    new Player(300, 500),
+    new Player(200, 300),
+    new Player(30, 300),
 
     //red
-    new Player(770, 300),
-    new Player(800, 475),
-    new Player(800, 150),
-    new Player(1000, 305),
+    new Player(750, 300),
+    new Player(900, 500),
+    new Player(900, 100),
+    new Player(1000, 300),
     new Player(1170, 300),
   ];
+
   ball = new Ball(600, 300);
+
   up = false;
   down = false;
   left = false;
   right = false;
+}
+
+if (restart) {
+  console.log("restarting match");
+  reset();
 }
 
 function players_Ball_Collision() {
@@ -234,14 +254,23 @@ function getDistance(x1, y1, x2, y2) {
   return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }
 
-function ballBounds() {
+function wait(ms) {
+  var start = new Date().getTime();
+  var end = start;
+  while (end < start + ms) {
+    end = new Date().getTime();
+  }
+}
+
+const ballBounds = async () => {
   // for the x (axis) parts of the field
   //if it's the goal gate
   // this means a point for the blue team
   if (ball.x + ball.size > canvas.width) {
-    if (ball.y > 200 && ball.y < 400) {
+    if (ball.y > 225 && ball.y < 375) {
       blueteam++;
       reset();
+      console.log("goal for the blueteam");
       return;
     }
     // if it's not a goal gate
@@ -251,9 +280,10 @@ function ballBounds() {
   //if it's the goal gate
   // this means a point for the red team
   if (ball.x - ball.size < 0) {
-    if (ball.y > 200 && ball.y < 400) {
+    if (ball.y > 225 && ball.y < 375) {
       redteam++;
       reset();
+      console.log("goal for the redteam");
       return;
     }
     ball.x = 0 + ball.size;
@@ -270,7 +300,7 @@ function ballBounds() {
     ball.y = 0 + ball.size;
     ball.yVel *= -1.5;
   }
-}
+};
 
 function playersBounds() {
   for (let i = 0; i < 10; i++) {
@@ -329,59 +359,29 @@ function movePlayers() {
 function keyboardMoves(userChoice) {
   var dx = (players[userChoice].x - ball.x) / players[userChoice].size;
   var dy = (players[userChoice].y - ball.y) / players[userChoice].size;
+  function playerShoot() {
+    ball.xVel = 3 * -dx;
+    ball.yVel = 3 * -dy;
+    players[userChoice].xVel = dx;
+    players[userChoice].yVel = dy;
+    console.log("Shoots");
+  }
 
   for (let i = 0; i < 10; i++) {
-    //this var will allow me to shoot or to make a pass if the player is able to (if the player is close enough)
+    //this var will allow me to shoot if the player is able to (if the player is close enough)
     var isAble =
-      getDistance(players[i].x, players[i].y, ball.x, ball.y) -
-      players[i].size -
+      getDistance(
+        players[userChoice].x,
+        players[userChoice].y,
+        ball.x,
+        ball.y
+      ) -
+      players[userChoice].size -
       ball.size;
 
-    if (isAble < 5) {
-      //base case
+    if (isAble < 15) {
       if (shoot) {
-        ball.x = players[userChoice].x + 225;
-        ball.y = players[userChoice].y;
-        players[userChoice].xVel = dx;
-        players[userChoice].yVel = dy;
-
-        if (up) {
-          ball.x = players[userChoice].x;
-          ball.y = players[userChoice].y - 225;
-          players[userChoice].xVel = dx;
-          players[userChoice].yVel = dy;
-          console.log("Shoots up");
-        }
-        if (down && !left) {
-          console.log("Shoots down");
-          ball.x = players[userChoice].x;
-          ball.y = players[userChoice].y + 225;
-          players[userChoice].xVel = dx;
-          players[userChoice].yVel = dy;
-        }
-        if (right) {
-          console.log("Shoots right");
-          ball.x = players[userChoice].x + 225;
-          ball.y = players[userChoice].y;
-          players[userChoice].xVel = dx;
-          players[userChoice].yVel = dy;
-        }
-        if (left) {
-          console.log("Shoots left");
-          ball.x = players[userChoice].x - 225;
-          ball.y = players[userChoice].y;
-          players[userChoice].xVel = dx;
-          players[userChoice].yVel = dy;
-        }
-      }
-    }
-    if (isAble < 5) {
-      if (pass) {
-        ball.x = players[userChoice].x + 50;
-        ball.y = players[userChoice].y;
-        players[userChoice].xVel = dx;
-        players[userChoice].yVel = dy;
-        console.log("Makes a pass");
+        setTimeout(playerShoot(), 4000);
       }
     }
   }
@@ -459,11 +459,11 @@ document.onkeyup = function (e) {
   if (e.keyCode === 88) {
     shoot = false;
   }
-  if (e.keyCode === 90) {
-    pass = false;
-  }
   if (e.keyCode === 67) {
     run = false;
+  }
+  if (e.keyCode === 82) {
+    restart = false;
   }
 };
 
@@ -483,11 +483,11 @@ document.onkeydown = function (e) {
   if (e.keyCode === 88) {
     shoot = true;
   }
-  if (e.keyCode === 90) {
-    pass = true;
-  }
   if (e.keyCode === 67) {
     run = true;
+  }
+  if (e.keyCode === 82) {
+    restart = true;
   }
 };
 
@@ -504,14 +504,7 @@ function renderBall() {
 }
 
 function renderPlayers() {
-  context.save();
-  context.beginPath();
-  context.fillStyle = "purple"; //player color
-  context.arc(players[0].x, players[0].y, players[0].size, 0, Math.PI * 2);
-  context.fill();
-  context.closePath();
-
-  for (let i = 1; i < 5; i++) {
+  for (let i = 0; i < 5; i++) {
     context.beginPath();
     context.fillStyle = "blue"; //player color
     context.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
@@ -535,7 +528,7 @@ function renderBackground() {
   // Outer lines
   context.beginPath();
   context.rect(0, 0, canvas.width, canvas.height);
-  context.fillStyle = "#a2ba36";
+  context.fillStyle = "#6AB219";
   context.fill();
   context.lineWidth = 1;
   context.strokeStyle = "#FFF";
@@ -567,7 +560,7 @@ function renderBackground() {
   context.rect(0, (canvas.height - 322) / 2, 132, 322);
   context.stroke();
   context.closePath();
-  //Home goal box
+
   context.beginPath();
   context.rect(0, (canvas.height - 146) / 2, 44, 146);
   context.stroke();
@@ -591,7 +584,6 @@ function renderBackground() {
   context.arc(88, canvas.height / 2, 73, 0.29 * Math.PI, 1.71 * Math.PI, true);
   context.stroke();
   context.closePath();
-
   //Away penalty box
   context.beginPath();
   context.rect(canvas.width - 132, (canvas.height - 322) / 2, 132, 322);
@@ -660,4 +652,141 @@ function renderBackground() {
 
 function clear() {
   context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// Testing
+// This function will make the players move in different directions
+function directions() {
+  // Making goalkeepers cover their position
+  players[4].y--;
+  players[9].y++;
+  if (players[4].y < 225) {
+    var dy = (players[4].y - (players[4].y - 25)) / players[4].size;
+    players[4].yVel = dy;
+  }
+  if (players[4].y > 375) {
+    var dy = (players[4].y - (players[4].y - 25)) / players[4].size;
+    players[4].yVel = -dy;
+  }
+
+  if (players[9].y < 225) {
+    var dy = (players[9].y - (players[9].y - 25)) / players[9].size;
+    players[9].yVel = dy;
+  }
+  if (players[9].y > 375) {
+    var dy = (players[9].y - (players[9].y - 25)) / players[9].size;
+    players[9].yVel = -dy;
+  }
+
+  // Making players covering a position move in a direction
+
+  var player_distanceblue =
+    getDistance(players[1].x, players[1].y, players[2].x, players[2].y) -
+    players[1].size -
+    players[2].size;
+
+  var player_distancered =
+    getDistance(players[6].x, players[6].y, players[7].x, players[7].y) -
+    players[6].size -
+    players[7].size;
+
+  players[6].y--;
+  players[7].y++;
+  players[1].y++;
+  players[2].y--;
+
+  if (players[1].y + players[1].size < 80) {
+    players[1].y = 80 - players[1].size;
+    players[1].yVel *= -0.2;
+  }
+  if (players[2].y + players[2].size > 500) {
+    players[2].y = 500 - players[2].size;
+    players[2].yVel *= -0.2;
+  }
+  if (players[6].y + players[6].size > 500) {
+    players[6].y = 500 - players[6].size;
+    players[6].yVel *= -0.2;
+  }
+  if (players[7].y + players[7].size < 80) {
+    players[7].y = 80 - players[7].size;
+    players[7].yVel *= -0.2;
+  }
+
+  if (player_distanceblue < 50) {
+    var dx = (players[1].x - players[2].x) / players[1].size;
+    var dy = (players[1].y - players[2].y) / players[1].size;
+    players[1].xVel = 0.5 * dx;
+    players[1].yVel = 0.5 * dy;
+    players[2].xVel = 0.5 * -dx;
+    players[2].yVel = 0.5 * -dy;
+  }
+
+  if (player_distancered < 75) {
+    var dx = (players[6].x - players[7].x) / players[6].size;
+    var dy = (players[6].y - players[7].y) / players[6].size;
+    players[6].xVel = 0.5 * dx;
+    players[6].yVel = 0.5 * dy;
+    players[7].xVel = 0.5 * -dx;
+    players[7].yVel = 0.5 * -dy;
+  }
+
+  // Making the player [5] follow the ball and making the player [5] score a goal
+  var dx = (players[5].x - ball.x) / players[5].size;
+  var dy = (players[5].y - ball.y) / players[5].size;
+  var ball_distance =
+    getDistance(players[5].x, players[5].y, ball.x, ball.y) -
+    players[5].size -
+    ball.size;
+
+  // if the red player is close to the ball he will go for it
+  if (ball_distance < 125) {
+    players[5].xVel = -dx;
+    players[5].yVel = -dy;
+    console.log("Red player is looking for the ball");
+
+    // if the player is in the right position to shoot and score a goal, the he will do it
+    if (players[5].y < 375 && players[5].y > 175 && players[5].x < 235) {
+      console.log("Red team player is ready to shoot!");
+      ball.xVel = 3 * -dx;
+      ball.yVel = -dy + 0.05;
+    }
+    // check if player is going in the right direction, if is not then fix it
+
+    // Here I check if the player goes in the right direction related to axis x
+
+    if (players[5].x > 1000) {
+      console.log("not in the right direction axis x");
+
+      players[5].x = players[5].x + 5;
+      ball.x = ball.x - 5;
+    }
+    if (players[5].x < 100) {
+      console.log("not in the right direction axis x");
+      ball.x = ball.x + 5;
+    }
+    // Here I check if the player goes in the right direction related to axis y
+    if (players[5].y < 150 || players[5].y > 500) {
+      console.log("not in the right direction axis y");
+      if (players[5].y < 225) {
+        ball.y++;
+        ball.x++;
+      } else if (players[5].y > 375) {
+        players[5].y - 20;
+        ball.y--;
+      }
+      if (players[5].x < 110) {
+        if (players.y < 275) {
+          players[5].y--;
+          ball.y--;
+          ball.x--;
+        }
+      }
+      if (players[5].x < 110) {
+        if (players.y > 375) {
+          players[5].y--;
+          ball.y++;
+        }
+      }
+    }
+  }
 }
