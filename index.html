@@ -22,20 +22,6 @@
       <div id="theHead">
         <h1>Footaball Game</h1>
         <h3>Main Menu</h3>
-
-        <div class="sound-section" unselectable="on">
-          <audio id="crowd">
-            <source src="assets/crowd.mp3" type="audio/mp3" />
-          </audio>
-          <i
-            class="sound-icon tooltip fa fa-volume-up fa-2x"
-            id="sound-icon"
-            type="button"
-            onclick="playSound('crowd')"
-          >
-            <span class="tooltiptext">Mute/Unmute</span>
-          </i>
-        </div>
       </div>
 
       <div class="from-orange-400 to-orange-700">
@@ -55,6 +41,42 @@
           Back
         </button>
 
+        <button
+          class="bg-gradient-to-r text-white w-1/4 flex hover:from-teal-400 hover:to-blue-500 items-center justify-center text-white"
+          id="modesBtn"
+          onclick="showModes()"
+        >
+          Game Modes
+        </button>
+        <div id="modes">
+          <h1>Game Modes</h1>
+          <p>Here the player can select a different match.</p>
+        </div>
+
+        <button
+          class="bg-gradient-to-r text-white w-1/4 flex hover:from-teal-400 hover:to-blue-500 items-center justify-center text-white"
+          id="settingsBtn"
+          onclick="showSettings()"
+        >
+          Settings
+        </button>
+        <div id="settings">
+          <h1>Settings</h1>
+          <p>Here the player can set up the options</p>
+          <div class="sound-section" unselectable="on">
+            <audio id="crowd">
+              <source src="assets/crowd.mp3" type="audio/mp3" />
+            </audio>
+            <i
+              class="sound-icon tooltip fa fa-volume-up fa-2x"
+              id="sound-icon"
+              type="button"
+              onclick="playSound('crowd')"
+            >
+              <span class="tooltiptext">Mute/Unmute</span>
+            </i>
+          </div>
+        </div>
         <button
           class="bg-gradient-to-r text-white w-1/4 flex hover:from-teal-400 hover:to-blue-500 items-center justify-center text-white"
           id="aboutBtn"
@@ -80,7 +102,7 @@
       <canvas id="game" width="1200" height="600"></canvas>
       <script src="script.js"></script>
       <p class="text-1xl" id="instructions">
-        Press C to run, press X to shoot! <br/>
+        Press Z to run, press X to shoot! <br />
         Press R to restart the match
       </p>
       <p class="text-1xl" id="instructions"></p>

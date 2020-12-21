@@ -46,8 +46,37 @@ var showCredits = function () {
   document.getElementById("theHead").style.display = "none";
   document.getElementById("aboutBtn").style.display = "none";
   document.getElementById("newGame").style.display = "none";
+  document.getElementById("modes").style.display = "none";
+  document.getElementById("settings").style.display = "none";
   document.getElementById("credits").style.display = "block";
   document.getElementById("backBtn").style.display = "block";
+  document.getElementById("modesBtn").style.display = "none";
+  document.getElementById("settingsBtn").style.display = "none";
+
+};
+
+var showModes = function () {
+  document.getElementById("theHead").style.display = "none";
+  document.getElementById("aboutBtn").style.display = "none";
+  document.getElementById("newGame").style.display = "none";
+  document.getElementById("credits").style.display = "none";
+  document.getElementById("modes").style.display = "block";
+  document.getElementById("settings").style.display = "none";
+  document.getElementById("backBtn").style.display = "block";
+  document.getElementById("modesBtn").style.display = "none";
+  document.getElementById("settingsBtn").style.display = "none";
+};
+
+var showSettings = function () {
+  document.getElementById("theHead").style.display = "none";
+  document.getElementById("aboutBtn").style.display = "none";
+  document.getElementById("newGame").style.display = "none";
+  document.getElementById("credits").style.display = "none";
+  document.getElementById("modes").style.display = "none";
+  document.getElementById("settings").style.display = "block";
+  document.getElementById("backBtn").style.display = "block";
+  document.getElementById("modesBtn").style.display = "none";
+  document.getElementById("settingsBtn").style.display = "none";
 };
 
 var goBack = function () {
@@ -55,22 +84,33 @@ var goBack = function () {
   document.getElementById("credits").style.display = "none";
   document.getElementById("theHead").style.display = "block";
   document.getElementById("newGame").style.display = "block";
+  document.getElementById("modes").style.display = "none";
+  document.getElementById("settings").style.display = "none";
   document.getElementById("aboutBtn").style.display = "block";
+  document.getElementById("modesBtn").style.display = "block";
+  document.getElementById("settingsBtn").style.display = "block";
+
+  
 };
 
 quickMatch = () => {
+
+  document.getElementById("theHead").style.display = "none";
+  document.getElementById("aboutBtn").style.display = "none";
+  document.getElementById("newGame").style.display = "none";
+  document.getElementById("credits").style.display = "none";
+  document.getElementById("modes").style.display = "none";
+  document.getElementById("settings").style.display = "none";
+  document.getElementById("backBtn").style.display = "none";
+  document.getElementById("modesBtn").style.display = "none";
+  document.getElementById("settingsBtn").style.display = "none";
   instructions.style.display = "block";
   canvas.style.display = "block";
-
   var userChoice = 0;
   let blueteam_score = document.getElementById("blueteam_score");
   let redteam_score = document.getElementById("redteam_score");
 
-  document.getElementById("backBtn").style.display = "none";
-  document.getElementById("credits").style.display = "none";
-  document.getElementById("theHead").style.display = "none";
-  document.getElementById("newGame").style.display = "none";
-  document.getElementById("aboutBtn").style.display = "none";
+
   if (restart) {
     console.log("restarting match");
     reset();
@@ -459,7 +499,7 @@ document.onkeyup = function (e) {
   if (e.keyCode === 88) {
     shoot = false;
   }
-  if (e.keyCode === 67) {
+  if (e.keyCode === 90) {
     run = false;
   }
   if (e.keyCode === 82) {
@@ -483,7 +523,7 @@ document.onkeydown = function (e) {
   if (e.keyCode === 88) {
     shoot = true;
   }
-  if (e.keyCode === 67) {
+  if (e.keyCode === 90) {
     run = true;
   }
   if (e.keyCode === 82) {
