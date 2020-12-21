@@ -1,6 +1,6 @@
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
-
+playSound('crowd');
 canvas.style.display = "none";
 
 window.requestAnimationFrame =
@@ -33,12 +33,14 @@ function playSound(sound) {
   }
 }
 
+
 $(function () {
-  $("#sound-icon").on("click", function () {
+  $("#sound-icon").on("click",  function () {
     $(this).toggleClass("fa-volume-up fa-volume-off");
     $(this).hasClass("fa-volume-off")
-      ? console.log("Muting sound")
-      : console.log("Unmuting Sound");
+      ? document.getElementById("showmute").innerHTML = "Unmute"
+      : document.getElementById("showmute").innerHTML = "Mute"
+      
   });
 });
 
@@ -80,17 +82,15 @@ var showSettings = function () {
 };
 
 var goBack = function () {
-  document.getElementById("backBtn").style.display = "none";
-  document.getElementById("credits").style.display = "none";
   document.getElementById("theHead").style.display = "block";
   document.getElementById("newGame").style.display = "block";
-  document.getElementById("modes").style.display = "none";
-  document.getElementById("settings").style.display = "none";
   document.getElementById("aboutBtn").style.display = "block";
   document.getElementById("modesBtn").style.display = "block";
   document.getElementById("settingsBtn").style.display = "block";
-
-  
+  document.getElementById("backBtn").style.display = "none";
+  document.getElementById("credits").style.display = "none";
+  document.getElementById("modes").style.display = "none";
+  document.getElementById("settings").style.display = "none"; 
 };
 
 quickMatch = () => {
@@ -104,6 +104,7 @@ quickMatch = () => {
   document.getElementById("backBtn").style.display = "none";
   document.getElementById("modesBtn").style.display = "none";
   document.getElementById("settingsBtn").style.display = "none";
+
   instructions.style.display = "block";
   canvas.style.display = "block";
   var userChoice = 0;
@@ -823,3 +824,4 @@ function directions() {
     }
   }
 }
+

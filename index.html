@@ -16,9 +16,9 @@
   </head>
 
   <body
-    class="bg-gradient-to-r from-teal-400 to-green-500 text-center text-white font-sans"
+    class="place-self-center bg-gradient-to-r from-teal-400 to-green-500 text-center text-white font-sans"
   >
-    <div>
+    <div >
       <div id="theHead">
         <h1>Footaball Game</h1>
         <h3>Main Menu</h3>
@@ -28,7 +28,7 @@
         <button
           class="bg-gradient-to-r text-white w-1/4 hover:from-teal-400 hover:to-blue-500 flex items-center justify-center text-white"
           id="newGame"
-          onclick="playSound('crowd'); quickMatch();"
+          onclick="quickMatch();"
         >
           Quick Match
         </button>
@@ -73,7 +73,7 @@
               type="button"
               onclick="playSound('crowd')"
             >
-              <span class="tooltiptext">Mute/Unmute</span>
+              <span id="showmute">Mute</span>
             </i>
           </div>
         </div>
@@ -87,6 +87,12 @@
         <div id="credits">
           Made by Gonzalo Simon.
           <p>I'm a web-developer from Argentina, this is one of my projects.</p>
+          <div>
+          <p>You can learn on my blog how I made this game with JavaScript.</p>
+
+          <a href"https://gonzalosimon.hashnode.dev/football-game-with-javascript-part-1">Click here to check the first part</a> <br />
+          <a href"https://gonzalosimon.hashnode.dev/football-game-with-javascript-part-2-making-botscpu-move">Click here to check the second part</a>
+        </div>
         </div>
         <button
           class="bg-gradient-to-r text-white w-1/4 text-white inline-block text-base cursor-pointer w-1/4 flex items-center justify-center rounded-md border border-gray-300"
@@ -99,7 +105,7 @@
     </div>
 
     <div>
-      <canvas id="game" width="1200" height="600"></canvas>
+      <canvas class="" id="game" width="1200" height="600"></canvas>
       <script src="script.js"></script>
       <p class="text-1xl" id="instructions">
         Press Z to run, press X to shoot! <br />
