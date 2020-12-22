@@ -92,7 +92,9 @@ quickMatch = () => {
   canvas.style.display = "block";
   let blueteam_score = document.getElementById("blueteam_score");
   let redteam_score = document.getElementById("redteam_score");
-
+if(restart){
+  reset();
+}
   //Render functions
   clear();
   renderBackground();
@@ -156,15 +158,14 @@ let players = [
 ball = new Ball(canvas.width / 2, canvas.height / 2);
 
 // Bounce functions
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 function reset() {
   players = [
     //blue
-    new Player(canvas.width / 2, canvas.height / 4),
+    new Player(canvas.width / 3, canvas.height / 2),
     new Player(30, 300),
-
+  
     //red
-    new Player(canvas.width / 2, canvas.height - canvas.height / 4),
+    new Player((canvas.width / 3) * 2,  canvas.height - canvas.height / 2),
     new Player(1170, 300),
   ];
 
@@ -363,8 +364,8 @@ function keyboardMoves() {
   var dx = (players[0].x - ball.x) / players[0].size;
   var dy = (players[0].y - ball.y) / players[0].size;
   function playerShoot() {
-    ball.xVel = 3 * -dx;
-    ball.yVel = 3 * -dy;
+    ball.xVel = 7/2 * -dx;
+    ball.yVel = 7/2 * -dy;
     players[0].xVel = dx;
     players[0].yVel = dy;
     console.log("Shoots");
@@ -668,26 +669,51 @@ function directions() {
 
   //making the blue goalkeeper go after the ball when it's close enough
   function goalkeeperDirections() {
-    var dx = (players[1].x - ball.x) / players[1].size;
-    var dy = (players[1].y - ball.y) / players[1].size;
-
-  var ball_distance =
-    getDistance(players[1].x, players[1].y, ball.x, ball.y) -
-    players[1].size -
-    ball.size;
-
-  // if the player is close to the ball he will go for it
-  if (ball_distance < 100) {
-    console.log("Goalkeeper player is looking for the ball");
-    players[1].xVel = -dx;
-    players[1].yVel = -dy;
-  }
-    if(ball_distance < 5){
-      console.log("throws the ball!");
-      ball.xVel = 3 * - dx;
-      ball.yVel = 0.15 - dy;
-      players[1].x = 3 * dx;
+    for (i = 1; i < 4; i++) {
+      if(i === 2){
+        i++;
+      }
+      var dx = (players[i].x - ball.x) / players[i].size;
+      var dy = (players[i].y - ball.y) / players[i].size;
+  
+    var ball_distance =
+      getDistance(players[i].x, players[i].y, ball.x, ball.y) -
+      players[i].size -
+      ball.size;
+  
+    // if the player is close to the ball he will go for it
+    
+    if (i === 1) {
+      if (ball_distance < 100) {
+        console.log("Goalkeeper player is looking for the ball");
+        players[i].xVel = -dx;
+        players[i].yVel = -dy;
+      }
+        if(ball_distance < 5){
+          console.log("throws the ball!");
+          ball.xVel = 3 * - dx;
+          ball.yVel = 0.15 - dy;
+          players[i].x = 3 * dx;
+        }
     }
+
+    if (i === 3) {
+      if (ball_distance < 100) {
+        console.log("Goalkeeper player is looking for the ball");
+        players[i].xVel = -dx;
+        players[i].yVel = -dy;
+      }
+        if(ball_distance < 5){
+          console.log("throws the ball!");
+          ball.xVel = 3 * - dx;
+          ball.yVel = 0.15 - dy;
+          players[i].xVel = 4 * -dx;
+        }
+    }
+
+
+    }
+
   }
 
 
@@ -705,44 +731,47 @@ function directions() {
 
   // if the red player is close to the ball he will go for it
   if (ball_distance < 100) {
-    players[2].xVel = -dx;
-    players[2].yVel = -dy;
+    players[2].xVel = 1/2 *-dx;
+    players[2].yVel = 1/2 *-dy;
     console.log("Red player is looking for the ball");
 
     // if the player is in the right position to shoot and score a goal, the he will do it
-    if (players[2].y < down_theGoal && players[2].y > 175 && players[2].x < 100) {
-      console.log("Red team player is ready to shoot!");
-      ball.xVel = 2 * -dx;
-      ball.yVel = -dy + 0.05;
-      players[2].x = players[2].x + dx; 
+    if (players[2].y < down_theGoal && players[2].y > upon_theGoal && players[2].x < 100) {
+      players[2].x = players[2].x++;
+      ball.xVel = 7/2 * - dx;
+      ball.yVel = 7/2 * - dy;
+      players[2].xVel = 3 * dx;
+      players[2].yVel = 3 * dy;
     }
     // check if player is going in the right direction, if is not then fix it
 
-    // Here I check if the player goes in the right direction related to axis x
+     // Here I check if the player goes in the right direction related to axis x
 
-    if (players[2].x > 400) {
-      console.log("not in the right direction axis x");
-      players[2].x = players[2].x + 5;
-      ball.x = ball.x - 5;
+    if (players[2].x > 700){
+      console.log("nohe right direction axis-x");
+      players[2].xVel = -dx;
+      players[2].yVel = -dy;
+      ball.x--;
+      ball.y--;
     }
-    if (players[2].x < 150) {
-      players[2].x = players[2].x - 5;
-      ball.x = ball.x + 5;
-      if (players[2].y > down_theGoal) {
-        ball.y = ball.y - 3;
-      } else if (players[2].y < upon_theGoal) {
-        ball.y = ball.y + 3;
-      }
+
+    if (players[2].x < upon_theGoal) {
+      players[2].x = players[2].x++;
+      ball.x = ball.x - 3;
+      if (players[2].y < upon_theGoal) {
+        ball.y = ball.y++;
+      } else if (players[2].y > upon_theGoal) {
+        ball.y = ball.y--;
+      } 
     }
-    // Here I check if the player goes in the right direction related to axis y
-    if (players[2].y < 150 || players[2].y > 300) {
-      console.log("not in the right direction axis y");
+    // Here I check if the player goes in the right direction related to axis-y
+    if (players[2].y < upon_theGoal || players[2].y > down_theGoal) {
+      console.log("not in the right direction axis-y");
       if (players[2].y < upon_theGoal) {
         ball.y++;
-        ball.x++;
       } else if (players[2].y > down_theGoal) {
-        players[2].y - 10;
         ball.y--;
+        players[2].x--;
       }
     }
   }
