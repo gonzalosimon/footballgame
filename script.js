@@ -1,6 +1,6 @@
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
-playSound('crowd');
+playSound("crowd");
 canvas.style.display = "none";
 
 window.requestAnimationFrame =
@@ -16,6 +16,8 @@ var right = false;
 var shoot = false;
 var run = false;
 var restart = false;
+var upon_theGoal = ((canvas.height / 2) - 73)
+var down_theGoal = ((canvas.height / 2) + 73)
 
 function playSound(sound) {
   var crowd = document.getElementById("crowd");
@@ -28,14 +30,12 @@ function playSound(sound) {
   }
 }
 
-
 $(function () {
-  $("#sound-icon").on("click",  function () {
+  $("#sound-icon").on("click", function () {
     $(this).toggleClass("fa-volume-up fa-volume-off");
     $(this).hasClass("fa-volume-off")
-      ? document.getElementById("showmute").innerHTML = "Unmute"
-      : document.getElementById("showmute").innerHTML = "Mute"
-      
+      ? (document.getElementById("showmute").innerHTML = "Unmute")
+      : (document.getElementById("showmute").innerHTML = "Mute");
   });
 });
 
@@ -47,7 +47,6 @@ var showCredits = function () {
   document.getElementById("credits").style.display = "block";
   document.getElementById("backBtn").style.display = "block";
   document.getElementById("settingsBtn").style.display = "none";
-
 };
 
 var showModes = function () {
@@ -77,11 +76,10 @@ var goBack = function () {
   document.getElementById("settingsBtn").style.display = "block";
   document.getElementById("backBtn").style.display = "none";
   document.getElementById("credits").style.display = "none";
-  document.getElementById("settings").style.display = "none"; 
+  document.getElementById("settings").style.display = "none";
 };
 
 quickMatch = () => {
-
   document.getElementById("theHead").style.display = "none";
   document.getElementById("aboutBtn").style.display = "none";
   document.getElementById("newGame").style.display = "none";
@@ -147,11 +145,11 @@ let redteam = 0;
 
 let players = [
   //blue
-  new Player(canvas.width / 2, canvas.height / 4),
+  new Player(canvas.width / 3, canvas.height / 2),
   new Player(30, 300),
 
   //red
-  new Player(canvas.width / 2, (canvas.height - canvas.height / 4)),
+  new Player((canvas.width / 3) * 2,  canvas.height - canvas.height / 2),
   new Player(1170, 300),
 ];
 
@@ -164,12 +162,12 @@ function reset() {
     //blue
     new Player(canvas.width / 2, canvas.height / 4),
     new Player(30, 300),
-  
+
     //red
-    new Player(canvas.width / 2, (canvas.height - canvas.height / 4)),
+    new Player(canvas.width / 2, canvas.height - canvas.height / 4),
     new Player(1170, 300),
   ];
-  
+
   ball = new Ball(canvas.width / 2, canvas.height / 2);
   up = false;
   down = false;
@@ -272,7 +270,7 @@ const ballBounds = async () => {
   //if it's the goal gate
   // this means a point for the blue team
   if (ball.x + ball.size > canvas.width) {
-    if (ball.y > ((canvas.height / 2) - 73) && ball.y < ((canvas.height / 2) + 73)) {
+    if (ball.y > canvas.height / 2 - 73 && ball.y < down_theGoal) {
       blueteam++;
       reset();
       console.log("goal for the blueteam");
@@ -284,8 +282,8 @@ const ballBounds = async () => {
   }
   //if it's the goal gate
   // this means a point for the red team
-  if (ball.x - ball.size < 0) { 
-    if (ball.y > ((canvas.height / 2) - 73) && ball.y < ((canvas.height / 2) + 73)) {
+  if (ball.x - ball.size < 0) {
+    if (ball.y > upon_theGoal && ball.y < down_theGoal) {
       redteam++;
       reset();
       console.log("goal for the redteam");
@@ -375,18 +373,13 @@ function keyboardMoves() {
   for (let i = 0; i < 4; i++) {
     //this var will allow me to shoot if the player is able to (if the player is close enough)
     var isAble =
-      getDistance(
-        players[0].x,
-        players[0].y,
-        ball.x,
-        ball.y
-      ) -
+      getDistance(players[0].x, players[0].y, ball.x, ball.y) -
       players[0].size -
       ball.size;
 
     if (isAble < 15) {
       if (shoot) {
-        setTimeout(playerShoot(), 4000);
+        playerShoot();
       }
     }
   }
@@ -565,7 +558,7 @@ function renderBackground() {
   context.rect(0, (canvas.height - 146) / 2, 44, 146);
   context.stroke();
   context.closePath();
-  
+
   //Home goal
   context.beginPath();
   context.moveTo(1, canvas.height / 2 - 73);
@@ -600,7 +593,6 @@ function renderBackground() {
   context.fill();
   context.closePath();
 
-
   //Home L corner
   context.beginPath();
   context.arc(0, 0, 12, 0, 0.5 * Math.PI, false);
@@ -632,52 +624,80 @@ function renderBackground() {
 }
 
 function clear() {
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.clearRect(0, 0, canvas.width, canvas.height);down_theGoal
 }
 
 // Testing
 // This function will make the players move in different directions
 function directions() {
-
+  
   // Making goalkeepers cover their position
-  players[1].y--;
-  players[3].y++;
-  if (players[1].y < ((canvas.height / 2) - 70)) {
-    var dy = (players[1].y - (players[1].y - 25)) / players[1].size;
-    players[1].yVel = dy;
+  function converPosition() {
+    players[1].y--;
+    players[3].y++;
+    if (players[1].y < canvas.height / 2 - 70) {
+      var dy = (players[1].y - (players[1].y - 25)) / players[1].size;
+      players[1].yVel = dy;
+    }
+    if (players[1].y > canvas.height / 2 + 70) {
+      var dy = (players[1].y - (players[1].y - 25)) / players[1].size;
+      players[1].yVel = -dy;
+    }
+  
+    if (players[3].y < canvas.height / 2 - 70) {
+      var dy = (players[3].y - (players[3].y - 25)) / players[3].size;
+      players[3].yVel = dy;
+    }
+    if (players[3].y > canvas.height / 2 + 70) {
+      var dy = (players[3].y - (players[3].y - 25)) / players[3].size;
+      players[3].yVel = -dy;
+    }
+  
+    // A limit for the goalkeeper in the x-axis
+    if (players[3].x < 825) {
+      var dx = (players[3].x - (players[3].x - 25)) / players[3].size;
+      players[3].xVel = dx;
+    }
+  
+    if (players[1].x > 75) {
+      var dx = (players[1].x - (players[1].x - 25)) / players[1].size;
+      players[1].xVel = -dx;
+    }  
+  
   }
-  if (players[1].y > ((canvas.height / 2) + 70)) {
-    var dy = (players[1].y - (players[1].y - 25)) / players[1].size;
+
+  //making the blue goalkeeper go after the ball when it's close enough
+  function goalkeeperDirections() {
+    var dx = (players[1].x - ball.x) / players[1].size;
+    var dy = (players[1].y - ball.y) / players[1].size;
+
+  var ball_distance =
+    getDistance(players[1].x, players[1].y, ball.x, ball.y) -
+    players[1].size -
+    ball.size;
+
+  // if the player is close to the ball he will go for it
+  if (ball_distance < 100) {
+    console.log("Goalkeeper player is looking for the ball");
+    players[1].xVel = -dx;
     players[1].yVel = -dy;
   }
-
-  if (players[3].y < ((canvas.height / 2) - 70)) {
-    var dy = (players[3].y - (players[3].y - 25)) / players[3].size;
-    players[3].yVel = dy;
+    if(ball_distance < 5){
+      console.log("throws the ball!");
+      ball.xVel = 3 * - dx;
+      ball.yVel = 0.15 - dy;
+      players[1].x = 3 * dx;
+    }
   }
-  if (players[3].y > ((canvas.height / 2) + 70)) {
-    var dy = (players[3].y - (players[3].y - 25)) / players[3].size;
-    players[3].yVel = -dy;
-  }
-
-  // A limit for the goalkeeper in the x-axis
-    if(players[3].x < 825){
-    var dx = (players[3].x - (players[3].x - 25)) / players[3].size;
-    players[3].xVel = dx;
-  }
-
-  if(players[1].x > 75){
-    var dx = (players[1].x - (players[1].x - 25)) / players[1].size;
-    players[1].xVel = -dx;
-  }
-
 
 
 
   // Making the player[2] follow the ball and making the player[2] score a goal
+ 
+ function forwardDirections() {
   var dx = (players[2].x - ball.x) / players[2].size;
   var dy = (players[2].y - ball.y) / players[2].size;
-  
+
   var ball_distance =
     getDistance(players[2].x, players[2].y, ball.x, ball.y) -
     players[2].size -
@@ -690,48 +710,47 @@ function directions() {
     console.log("Red player is looking for the ball");
 
     // if the player is in the right position to shoot and score a goal, the he will do it
-    if (players[2].y < 375 && players[2].y > 175 && players[2].x < 235) {
+    if (players[2].y < down_theGoal && players[2].y > 175 && players[2].x < 100) {
       console.log("Red team player is ready to shoot!");
-      ball.xVel = 3 * -dx;
+      ball.xVel = 2 * -dx;
       ball.yVel = -dy + 0.05;
+      players[2].x = players[2].x + dx; 
     }
     // check if player is going in the right direction, if is not then fix it
 
     // Here I check if the player goes in the right direction related to axis x
 
-    if (players[2].x > 600) {
+    if (players[2].x > 400) {
       console.log("not in the right direction axis x");
       players[2].x = players[2].x + 5;
       ball.x = ball.x - 5;
-   
     }
     if (players[2].x < 150) {
       players[2].x = players[2].x - 5;
       ball.x = ball.x + 5;
-      if(players[2].y > 375){
+      if (players[2].y > down_theGoal) {
         ball.y = ball.y - 3;
-      } else if (players[2].y < 225){
+      } else if (players[2].y < upon_theGoal) {
         ball.y = ball.y + 3;
       }
-      
     }
     // Here I check if the player goes in the right direction related to axis y
-    if (players[2].y < 150 || players[2].y > 500) {
+    if (players[2].y < 150 || players[2].y > 300) {
       console.log("not in the right direction axis y");
-      if (players[2].y < 225) {
+      if (players[2].y < upon_theGoal) {
         ball.y++;
         ball.x++;
-      } else if (players[2].y > 375) {
-        players[2].y - 20;
+      } else if (players[2].y > down_theGoal) {
+        players[2].y - 10;
         ball.y--;
       }
     }
   }
 
-
-
-
-
-
+ }
+ 
+ converPosition()
+ forwardDirections();
+ goalkeeperDirections();
 }
 
