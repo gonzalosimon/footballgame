@@ -505,14 +505,14 @@ function renderBall() {
 function renderPlayers() {
   for (let i = 0; i < 2; i++) {
     context.beginPath();
-    context.fillStyle = "blue"; //player color
+    context.fillStyle = "yellow"; //player color
     context.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
     context.fill();
     context.closePath();
   }
   for (let i = 2; i < 4; i++) {
     context.beginPath();
-    context.fillStyle = "red";
+    context.fillStyle = "green";
     context.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
     context.fill();
     context.closePath();
@@ -527,7 +527,7 @@ function renderBackground() {
   // Outer lines
   context.beginPath();
   context.rect(0, 0, canvas.width, canvas.height);
-  context.fillStyle = "#bbbbbb";
+  context.fillStyle = "#a0bb9e";
   context.fill();
   context.lineWidth = 1;
   context.strokeStyle = "#FFF";
