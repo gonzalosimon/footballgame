@@ -15,43 +15,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
 
-  <body
-    class="place-self-center bg-gradient-to-r from-teal-400 to-green-500 text-center text-white font-sans"
-  >
-    <div >
+  <body class="bg-green-700 text-center text-white font-sans">
+    <div>
       <div id="theHead">
-        <h1>Footaball Game</h1>
-        <h3>Main Menu</h3>
+        <h1 class="mt-16 text-5xl">Football Game</h1>
+        <h3 class="mt-8">Main Menu</h3>
+        <br />
       </div>
 
       <div class="from-orange-400 to-orange-700">
         <button
           class="bg-gradient-to-r text-white w-1/4 hover:from-teal-400 hover:to-blue-500 flex items-center justify-center text-white"
           id="newGame"
-          onclick="quickMatch();"
+          onclick="onTimer(); quickMatch();"
         >
           Quick Match
         </button>
-
-        <button
-          class="bg-gradient-to-r mt-8 text-white w-1/4 flex hover:from-teal-400 hover:to-blue-500 items-center justify-center text-white"
-          id="backBtn"
-          onclick="goBack()"
-        >
-          Back
-        </button>
-
-        <button
-          class="bg-gradient-to-r text-white w-1/4 flex hover:from-teal-400 hover:to-blue-500 items-center justify-center text-white"
-          id="modesBtn"
-          onclick="showModes()"
-        >
-          Game Modes
-        </button>
-        <div id="modes">
-          <h1>Game Modes</h1>
-          <p>Here the player can select a different match.</p>
-        </div>
 
         <button
           class="bg-gradient-to-r text-white w-1/4 flex hover:from-teal-400 hover:to-blue-500 items-center justify-center text-white"
@@ -61,14 +40,13 @@
           Settings
         </button>
         <div id="settings">
-          <h1>Settings</h1>
-          <p>Here the player can set up the options</p>
+          <h2 class="text-4xl mt-8">Settings</h2>
           <div class="sound-section" unselectable="on">
             <audio id="crowd">
               <source src="assets/crowd.mp3" type="audio/mp3" />
             </audio>
             <i
-              class="sound-icon tooltip fa fa-volume-up fa-2x"
+              class="mt-8 sound-icon tooltip fa fa-volume-up fa-2x"
               id="sound-icon"
               type="button"
               onclick="playSound('crowd')"
@@ -76,6 +54,7 @@
               <span id="showmute">Mute</span>
             </i>
           </div>
+          <br />
         </div>
         <button
           class="bg-gradient-to-r text-white w-1/4 flex hover:from-teal-400 hover:to-blue-500 items-center justify-center text-white"
@@ -85,27 +64,50 @@
           About
         </button>
         <div id="credits">
-          Made by Gonzalo Simon.
+          <h2 class="text-4xl mt-8">About this game</h2>
+          <h3 class="text-xl mt-8">Made by Gonzalo Simon.</h3>
           <p>I'm a web-developer from Argentina, this is one of my projects.</p>
           <div>
-          <p>You can learn on my blog how I made this game with JavaScript.</p>
+            <br />
+            <p>
+              You can learn on my blog how I made this game with JavaScript.
+            </p>
 
-          <a href"https://gonzalosimon.hashnode.dev/football-game-with-javascript-part-1">Click here to check the first part</a> <br />
-          <a href"https://gonzalosimon.hashnode.dev/football-game-with-javascript-part-2-making-botscpu-move">Click here to check the second part</a>
+            <p>
+              <a
+                href="https://gonzalosimon.hashnode.dev/football-game-with-javascript-part-1"
+                >Click here to check the first part</a
+              >
+            </p>
+            <p>
+              <a
+                href="https://gonzalosimon.hashnode.dev/football-game-with-javascript-part-2-making-botscpu-move"
+                >Click here to check the second part</a
+              >
+            </p>
+
+            <br />
+          </div>
         </div>
-        </div>
+
         <button
-          class="bg-gradient-to-r text-white w-1/4 text-white inline-block text-base cursor-pointer w-1/4 flex items-center justify-center rounded-md border border-gray-300"
+          class="mt-16 bg-gradient-to-r text-white w-1/4 flex hover:from-teal-400 hover:to-blue-500 items-center justify-center text-white"
           id="backBtn"
           onclick="goBack()"
         >
-          Back
+          Go Back
         </button>
       </div>
     </div>
 
     <div>
-      <canvas class="" id="game" width="1200" height="600"></canvas>
+    <div class="text-center text-white font-sans flex justify-center" id="finalResult"></div>
+      <canvas
+        class="text-center text-white font-sans flex justify-center"
+        id="game"
+        width="900"
+        height="500"
+      ></canvas>  
       <script src="script.js"></script>
       <p class="text-1xl" id="instructions">
         Press Z to run, press X to shoot! <br />
@@ -114,14 +116,13 @@
       <p class="text-1xl" id="instructions"></p>
       <p class="text-1xl" id="blueteam_score"></p>
       <p class="text-1xl" id="redteam_score"></p>
+      <div id="showTime"> The match ends in <span id="timer"></span></div>
     </div>
   </body>
-
+  <br />
   <footer>
     <div class="footer text-center flex flex-wrap items-center">
-      <div
-        class="social-links flex rounded-full bg justify-center mx-auto flex"
-      >
+      <div class="social-links flex rounded-full bg justify-center flex">
         <div class="rounded-full bg-black social">
           <a
             href="https://www.linkedin.com/in/gonzalo-simon-aguilar/?locale=en_US/"
