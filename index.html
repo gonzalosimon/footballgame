@@ -19,14 +19,15 @@
     <div>
       <div id="theHead">
         <h1 class="mt-16 text-5xl">Footaball Game</h1>
-        <h3 class="mt-8">Main Menu</h3> <br/>
+        <h3 class="mt-8">Main Menu</h3>
+        <br />
       </div>
 
       <div class="from-orange-400 to-orange-700">
         <button
           class="bg-gradient-to-r text-white w-1/4 hover:from-teal-400 hover:to-blue-500 flex items-center justify-center text-white"
           id="newGame"
-          onclick="quickMatch();"
+          onclick="onTimer(); quickMatch();"
         >
           Quick Match
         </button>
@@ -65,13 +66,13 @@
         <div id="credits">
           <h2 class="text-4xl mt-8">About this game</h2>
           <h3 class="text-xl mt-8">Made by Gonzalo Simon.</h3>
-          <p >I'm a web-developer from Argentina, this is one of my projects.</p>
+          <p>I'm a web-developer from Argentina, this is one of my projects.</p>
           <div>
-             <br />
+            <br />
             <p>
               You can learn on my blog how I made this game with JavaScript.
             </p>
-         
+
             <p>
               <a
                 href="https://gonzalosimon.hashnode.dev/football-game-with-javascript-part-1"
@@ -100,12 +101,13 @@
     </div>
 
     <div>
+    <div class="text-center text-white font-sans flex justify-center" id="finalResult"></div>
       <canvas
         class="text-center text-white font-sans flex justify-center"
         id="game"
         width="900"
         height="500"
-      ></canvas>
+      ></canvas>  
       <script src="script.js"></script>
       <p class="text-1xl" id="instructions">
         Press Z to run, press X to shoot! <br />
@@ -114,14 +116,13 @@
       <p class="text-1xl" id="instructions"></p>
       <p class="text-1xl" id="blueteam_score"></p>
       <p class="text-1xl" id="redteam_score"></p>
+      <div id="showTime"> The match ends in <span id="timer"></span></div>
     </div>
   </body>
-<br/>
+  <br />
   <footer>
     <div class="footer text-center flex flex-wrap items-center">
-      <div
-        class="social-links flex rounded-full bg justify-center flex"
-      >
+      <div class="social-links flex rounded-full bg justify-center flex">
         <div class="rounded-full bg-black social">
           <a
             href="https://www.linkedin.com/in/gonzalo-simon-aguilar/?locale=en_US/"

@@ -19,10 +19,7 @@ canvas {
 
 
 /* Menu Buttons */
-#main {
-  display: none;
-}
-#instructions {
+#main, #instructions, #showTime {
   display: none;
 }
 

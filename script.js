@@ -79,6 +79,23 @@ var goBack = function () {
   document.getElementById("settings").style.display = "none";
 };
 
+let time = 60;
+function onTimer() {
+  showTime.style.display = "block";
+
+  document.getElementById('timer').innerHTML = time;
+  time--;
+  if (time < 0) {
+    alert("Game Over")
+    location.reload(true);
+    document.getElementById("finalResult")
+    finalResult.innerHTML = "Blue Team: " + blueteam + " Red Team: " + redteam;
+  }
+  else {
+    setTimeout(onTimer, 1000);
+  }
+}
+
 quickMatch = () => {
   document.getElementById("theHead").style.display = "none";
   document.getElementById("aboutBtn").style.display = "none";
@@ -95,6 +112,9 @@ quickMatch = () => {
   if (restart) {
     reset();
   }
+
+
+
   //Render functions
   clear();
   renderBackground();
@@ -682,7 +702,7 @@ function directions() {
       // if the player is close to the ball he will go for it
 
       if (i === 1) {
-        if(ball_distance < 75){
+        if (ball_distance < 75) {
           console.log("Goalkeeper player is looking for the ball");
           players[i].xVel = (1 / 2) * -dx;
           players[i].yVel = (1 / 2) * -dy;
@@ -692,11 +712,10 @@ function directions() {
             ball.yVel = 0.15 - dy;
             players[i].xVel = 3 * dx;
           }
-          if(players[i].x > 150){
+          if (players[i].x > 150) {
             players[i].xVel = 2 * dx;
           }
         }
-
       }
 
       if (i === 3) {
@@ -704,17 +723,17 @@ function directions() {
           console.log("Goalkeeper player is looking for the ball");
           players[i].xVel = (1 / 2) * -dx;
           players[i].yVel = (1 / 2) * -dy;
-        
-        if (ball_distance < 10) {
-          console.log("throws the ball!");
-          ball.xVel = 5 * -dx;
-          ball.yVel = 0.15 - dy;
-          players[i].xVel = 3 * -dx;
+
+          if (ball_distance < 10) {
+            console.log("throws the ball!");
+            ball.xVel = 5 * -dx;
+            ball.yVel = 0.15 - dy;
+            players[i].xVel = 3 * -dx;
+          }
+          if (players[i].x < 750) {
+            players[i].xVel = 2 * dx;
+          }
         }
-        if(players[i].x < 750){
-          players[i].xVel = 2 * dx; 
-        }
-       }
       }
     }
   }
