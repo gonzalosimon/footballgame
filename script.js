@@ -19,6 +19,32 @@ var restart = false;
 var upon_theGoal = canvas.height / 2 - 73;
 var down_theGoal = canvas.height / 2 + 73;
 
+var yellowPath = "assets/images/Blue.png";
+//The path to the image that we want to add.
+var yellowPlayerReady = false;
+var yellowImage = new Image();
+
+//Create a new Image object.
+yellowImage.onload = function () {
+  //Draw the image onto the canvas.
+  yellowPlayerReady = true;
+};
+//Set the src of this Image object.
+yellowImage.src = yellowPath;
+
+var greenPath = "assets/images/Red.png";
+//The path to the image that we want to add.
+var greenPlayerReady = false;
+var greenImage = new Image();
+
+//Create a new Image object.
+greenImage.onload = function () {
+  //Draw the image onto the canvas.
+  greenPlayerReady = true;
+};
+//Set the src of this Image object.
+greenImage.src = greenPath;
+
 function playSound(sound) {
   var crowd = document.getElementById("crowd");
   crowd.volume = 0.25; // setting the volume to 25% because the sound is loud
@@ -524,23 +550,40 @@ function renderBall() {
 
 function renderPlayers() {
   for (let i = 0; i < 2; i++) {
-    context.beginPath();
-    context.fillStyle = "yellow"; //player color
-    context.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
-    context.fill();
-    context.closePath();
+    // context.beginPath();
+    // context.fillStyle = "yellow"; //player color
+    // context.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
+    // context.fill();
+    // context.closePath();
+    if (yellowPlayerReady) {
+      context.drawImage(
+        
+        yellowImage,
+        players[i].x,
+        players[i].y - 35,
+        players[i].size - 0.5,
+        players[i].size * 2.5,
+        );
+    }
   }
   for (let i = 2; i < 4; i++) {
-    context.beginPath();
-    context.fillStyle = "green";
-    context.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
-    context.fill();
-    context.closePath();
+    // context.beginPath();
+    // context.fillStyle = "green";
+    // context.arc(players[i].x, players[i].y, players[i].size, 0, Math.PI * 2);
+    // context.fill();
+    // context.closePath();
+    if (greenPlayerReady) {
+      context.drawImage(
+        greenImage,
+        players[i].x,
+        players[i].y - 35,
+        players[i].size - 0.5,
+        players[i].size * 2.5
+      );
   }
-
+}
   context.restore();
 }
-
 function renderBackground() {
   context.save();
 
