@@ -584,6 +584,7 @@ function renderPlayers() {
 }
   context.restore();
 }
+
 function renderBackground() {
   context.save();
 
@@ -718,7 +719,7 @@ function directions() {
     }
 
     // A limit for the goalkeeper in the x-axis
-    if (players[3].x < 825) {
+    if (players[3].x < 725) {
       var dx = (players[3].x - (players[3].x - 25)) / players[3].size;
       players[3].xVel = dx;
     }
