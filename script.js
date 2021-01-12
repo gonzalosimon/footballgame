@@ -2,7 +2,6 @@ var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
 playSound("crowd");
 canvas.style.display = "none";
-
 window.requestAnimationFrame =
   window.requestAnimationFrame ||
   window.mozRequestAnimationFrame ||
@@ -130,8 +129,7 @@ quickMatch = () => {
   document.getElementById("settings").style.display = "none";
   document.getElementById("backBtn").style.display = "none";
   document.getElementById("settingsBtn").style.display = "none";
-
-  instructions.style.display = "block";
+  document.getElementById('instructions').style.display = "block";
   canvas.style.display = "block";
   let blueteam_score = document.getElementById("blueteam_score");
   let redteam_score = document.getElementById("redteam_score");
